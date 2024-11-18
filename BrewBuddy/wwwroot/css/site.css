@@ -1,0 +1,68 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+header {
+    background-color: burlywood;
+    color: white;
+    padding: 5px;
+    height: 68px;
+}
+
+body {
+    margin-bottom: 60px;
+    background-image: url("'/images/baggrund 2.jpg'");
+    background-size: contain;
+    color: black;
+}
+
+
+footer {
+    background-color: burlywood;
+    color: black;
+}
+
+h1 {
+    color: saddlebrown;
+}
+
+h2 {
+    color: saddlebrown;
+}
+
+h3 {
+    color: saddlebrown;
+}
+
+a {
+    color: saddlebrown;
+    text-decoration: none;
+}
+
+.nav-link {
+    color: burlywood;
+}
+
+button {
+    color: saddlebrown;
+    background-color: saddlebrown;
+}
+
+.DetaljeImage {
+    width: 40rem;
+}

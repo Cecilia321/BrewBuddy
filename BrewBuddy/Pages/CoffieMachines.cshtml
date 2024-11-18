@@ -1,0 +1,60 @@
+﻿@page
+@model CoffieMachinesModel
+
+<h1>Kaffemaskiner</h1>
+
+<!-- Vis eksisterende kaffemaskiner -->
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Maskine ID</th>
+            <th scope="col">Navn</th>
+            <th scope="col">Lokation</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var machine in Model.coffieMachines)
+        {
+            <tr>
+                <td>@machine.MachineId</td>
+                <td>@machine.Name</td>
+                <td>@machine.Location</td>
+            </tr>
+        <td>
+            <form method="post" asp-page-handler="Delete">
+                <input type="hidden" name="machineId" value="@machine.MachineId" />
+                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+            </form>
+        </td>
+        }
+    </tbody>
+</table>
+
+<hr />
+
+<h2>Tilføj Ny Kaffemaskine</h2>
+<form method="post">
+    <div>
+        <label for="Name">Navn</label>
+        <input type="text" id="Name" name="NewMachine.Name" required />
+    </div>
+    <div>
+        <label for="Location">Lokation</label>
+        <input type="text" id="Location" name="NewMachine.Location" required />
+    </div>
+    <button type="submit">Tilføj</button>
+</form>
+
+<!-- Tilføj en ny kaffemaskine -->
+@* <h2>Tilføj Ny Kaffemaskine</h2>
+<form method="post">
+    <div>
+        <label for="Name">Navn</label>
+        <input type="text" id="Name" name="Name" required />
+    </div>
+    <div>
+        <label for="Location">Lokation</label>
+        <input type="text" id="Location" name="Location" required />
+    </div>
+    <button type="submit">Tilføj</button>
+</form> *@
