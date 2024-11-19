@@ -1,0 +1,80 @@
+﻿@page
+@model BrewBuddy.Pages.UsersModel
+@{
+}
+
+<h1>Brugere</h1>
+
+<!-- Vis eksisterende users -->
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">User Id</th>
+            <th scope="col">Navn</th>
+            <th scope="col">EfterNavn</th>
+            <th scope="col">tlf</th>
+            <th scope="col">Rolle</th>
+            <th scope="col">Fødseldag</th>
+            <th scope="col">Registrerings dato</th>
+            <th scope="col">Email</th>
+            <th scope="col">Password</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.users)
+        {
+            <tr>
+                <td>@user.UserId</td>
+                <td>@user.FirstName</td>
+                <td>@user.LastName</td>
+                <td>@user.PhoneNumber</td>
+                <td>@user.Role</td>
+                <td>@user.BirthDate</td>
+                <td>@user.RegistrationDate</td>
+                <td>@user.Email</td>
+                <td>@user.Password</td>
+            </tr>
+        <td>
+            <form method="post" asp-page-handler="Delete">
+                <input type="hidden" name="userId" value="@user.UserId" />
+                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+            </form>
+        </td>
+        }
+    </tbody>
+</table>
+
+<hr />
+
+<h2>Tilføj Ny Bruger</h2>
+<form method="post" style="max-width: 500px; margin-top: 20px;">
+    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+        <label for="FirstName">Navn</label>
+        <input type="text" id="Name" name="NewUser.FirstName" required style="flex-grow: 1; padding: 5px;" />
+    </div>
+    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+        <label for="LastName">EfterNavn</label>
+        <input type="text" id="LastName" name="NewUser.LastName" required style="flex-grow: 1; padding: 5px;" />
+    </div>
+    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+        <label for="PhoneNumber">Telefon Nummer</label>
+        <input type="text" id="PhoneNumber" name="NewUser.PhoneNumber" required style="flex-grow: 1; padding: 5px;"/>
+    </div>
+    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+        <label for="Role">Rolle</label>
+        <input type="text" id="Role" name="NewUser.Role" required style="flex-grow: 1; padding: 5px;"/>
+    </div>
+    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+        <label for="BirthDate">Fødselsdags dato</label>
+        <input type="text" id="BirthDate" name="NewUser.BirthDate" required style="flex-grow: 1; padding: 5px;"/>
+    </div>
+    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+        <label for="Email">Email</label>
+        <input type="text" id="Email" name="NewUser.Email" required style="flex-grow: 1; padding: 5px;"/>
+    </div>
+    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+        <label for="Password">Kode</label>
+        <input type="text" id="Password" name="NewUser.Password" required style="flex-grow: 1; padding: 5px;"/>
+    </div>
+    <button type="submit">Tilføj</button>
+</form>

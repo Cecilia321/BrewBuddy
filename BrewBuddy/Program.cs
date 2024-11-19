@@ -20,6 +20,27 @@ namespace BrewBuddy
 
             //dette registrere repositoriet, så jeg kan bruge det i razorpagen 
             builder.Services.AddScoped<IRepository<CoffieMachine>, CoffieMachineRepository>();
+            builder.Services.AddScoped<IRepository<User>, UserRepository>();
+
+            builder.Services.AddAuthentication("MyCookieAuth").AddCookie("MyCookieAuth", options =>
+            {
+                options.Cookie.Name = "MyCookieAuth";
+                options.LoginPath = "/Account/Login";
+                options.AccessDeniedPath = "/Account/AccesDenied";
+                options.ExpireTimeSpan = TimeSpan.FromSeconds(60);
+            });
+
+            builder.Services.AddAuthorization(options =>
+            {
+                //options.AddPolicy("AdminOnly", policy => policy.RequireClaim("Admin")); //ikke buges
+
+                //vi laver her en policy, og tilføjer en claim til den policy (vi kan nu tilføje denne policy til vores side (humanresouce))
+                //options.AddPolicy("MustBelongToHRDepartment",
+                //    policy => policy.RequireClaim("Department", "HR"));
+
+                options.AddPolicy("AdminOnly", policy => policy
+                .RequireClaim("Role", "Admin"));
+            });
 
             //
             builder.Services.AddRazorPages();
@@ -38,6 +59,9 @@ namespace BrewBuddy
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            //tilføje authorization middleware, som er ansvarlig for at kalde the authorization haldeler  
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

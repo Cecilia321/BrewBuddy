@@ -28,13 +28,13 @@ body {
     margin-bottom: 60px;
     background-image: url("'/images/baggrund 2.jpg'");
     background-size: contain;
-    color: black;
+    color: saddlebrown;
 }
 
 
 footer {
     background-color: burlywood;
-    color: black;
+    color: saddlebrown;
 }
 
 h1 {
@@ -60,7 +60,7 @@ a {
 
 button {
     color: saddlebrown;
-    background-color: saddlebrown;
+    background-color: burlywood;
 }
 
 .DetaljeImage {
