@@ -40,6 +40,7 @@ namespace BrewBuddy
 
                 options.AddPolicy("AdminOnly", policy => policy
                 .RequireClaim("Role", "Admin"));
+
             });
 
             //
