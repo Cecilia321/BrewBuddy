@@ -30,15 +30,17 @@ namespace BrewBuddy.Pages.Account
         { 
             if (!ModelState.IsValid) return Page();
 
+            var user = _userRepository.GetAll().FirstOrDefault(u => u.Email == Email && u.Password == Password);
+
             //verificere email og password 
-            if (Email == Email && Password == Password)
+            if (user != null)
             {
                 //laver security context - vi laver derfor en liste af claims 
                 var Claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, "Admin"),
-                    new Claim(ClaimTypes.Email, "Admin@mywebsite.com"),
-                    new Claim("Role", "Admin") //til vores policy, ved at tilføje dette claim kan vi nu bruge vore policy med samme "Role", "Admin"
+                    //new Claim(ClaimTypes.Name, user.FirstName),
+                    new Claim(ClaimTypes.Email, user.Email),
+                    new Claim("Role", user.Role), //til vores policy, ved at tilføje dette claim kan vi nu bruge vore policy med samme "Role", "Admin"
                 };
                 
                 var identity = new ClaimsIdentity(Claims, "MyCookieAuth"); //Vi tilføjer nu listen af claims til en identity, vi bruger claimsidentity, så vi kan tilføje claims til og vores authenticationtype
@@ -49,6 +51,8 @@ namespace BrewBuddy.Pages.Account
                 return RedirectToPage("/Index");
 
             }
+            // Hvis bruger ikke findes eller password er forkert
+            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             return Page();
         }
 

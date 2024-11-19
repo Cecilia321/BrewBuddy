@@ -35,8 +35,8 @@ namespace BrewBuddy
                 //options.AddPolicy("AdminOnly", policy => policy.RequireClaim("Admin")); //ikke buges
 
                 //vi laver her en policy, og tilføjer en claim til den policy (vi kan nu tilføje denne policy til vores side (humanresouce))
-                //options.AddPolicy("MustBelongToHRDepartment",
-                //    policy => policy.RequireClaim("Department", "HR"));
+                options.AddPolicy("UserOnly",
+                    policy => policy.RequireClaim("Role", "User"));
 
                 options.AddPolicy("AdminOnly", policy => policy
                 .RequireClaim("Role", "Admin"));
