@@ -48,7 +48,7 @@ namespace BrewBuddy.Pages.Account
 
                 await HttpContext.SignInAsync("MyCookieAuth", claimsPrincipal);
 
-                return RedirectToPage("/Index");
+                return RedirectToPage("/Users");
 
             }
             // Hvis bruger ikke findes eller password er forkert
