@@ -17,6 +17,8 @@ namespace BrewBuddy.Pages
         [BindProperty]
         public User NewUser { get; set; } //og den her laver vi for at kunne oprette en ny maskine 
 
+  
+
         
         public UsersModel(IRepository<User> repository) //derefter laver vi en konstruktør med repositori
         {
@@ -37,6 +39,8 @@ namespace BrewBuddy.Pages
                 users = _repository.GetAll();
                 return Page();
             }
+
+            NewUser.Password = BCrypt.Net.BCrypt.HashPassword(NewUser.Password, workFactor: 12);
             _repository.Add(NewUser);
             return RedirectToPage();
         }

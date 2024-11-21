@@ -39,9 +39,18 @@ namespace BrewBuddy.Repositories
             return _context.CoffieMachines.ToList(); //henter alle kaffemaskiner 
         }
 
-        public void Update(CoffieMachine entity)
+        public void Update(CoffieMachine updateMachine) // update metoden
         {
-            throw new NotImplementedException();
+            var coffeeMachine = _context.CoffieMachines.Find(updateMachine.MachineId); //find maskine som matcher id'et
+            if (coffeeMachine != null) //hvis id'et matcher en maskine kør if statment
+            {
+                _context.Entry(coffeeMachine).CurrentValues.SetValues(updateMachine);
+                _context.SaveChanges(); //gemmer ændringerne der er blevet lavet 
+            }
+            else
+            {
+                throw new ArgumentException("Kaffemaskien med det givet ID findes ikke"); //besked som bliver sendt hvis maskinen ikke findes
+            }
         }
     }
 }

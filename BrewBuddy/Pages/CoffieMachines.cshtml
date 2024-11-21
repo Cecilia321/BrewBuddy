@@ -20,11 +20,41 @@
                 <td>@machine.Name</td>
                 <td>@machine.Location</td>
             </tr>
+            @* <td>
+            <form method="post" asp-page-handler="Update">
+                <input type="hidden" asp-for="@machine.MachineId" name="UpdatedMachine.MachineId" value="@machine.MachineId" />
+                <input type="text" asp-for="UpdatedMachine.Name" name="UpdatedMachine.Name" placeholder="New Name" value="@machine.Name" />
+                <input type="text" asp-for="UpdatedMachine.Location" name="UpdatedMachine.Location" placeholder="New Location" value="@machine.Location" />
+                <button type="submit" class="btn btn-primary btn-sm">Update</button>
+            </form>
+            </td> *@
         <td>
             <form method="post" asp-page-handler="Delete">
                 <input type="hidden" name="machineId" value="@machine.MachineId" />
                 <button type="submit" class="btn btn-danger btn-sm">Delete</button>
             </form>
+        </td>
+        <td>
+            <!-- Update form -->
+            <form method="post" asp-page-handler="SelectForUpdate">
+                <input type="hidden" name="MachineId" value="@machine.MachineId" />
+                <button type="submit" class="btn btn-primary btn-sm">Update</button>
+            </form>
+                @if (Model.UpdatedMachine?.MachineId > 0)
+                {
+                <form method="post" asp-page-handler="Update">
+                    <input type="hidden" name="UpdatedMachine.MachineId" value="@Model.UpdatedMachine.MachineId" />
+                    <div>
+                        <label for="UpdatedName">Navn</label>
+                        <input type="text" id="UpdatedName" name="UpdatedMachine.Name" value="@Model.UpdatedMachine.Name" required />
+                    </div>
+                    <div>
+                        <label for="UpdatedLocation">Lokation</label>
+                        <input type="text" id="UpdatedLocation" name="UpdatedMachine.Location" value="@Model.UpdatedMachine.Location" required />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Gem Opdatering</button>
+                </form>
+                }
         </td>
         }
     </tbody>

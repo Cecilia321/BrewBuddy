@@ -30,10 +30,10 @@ namespace BrewBuddy.Pages.Account
         { 
             if (!ModelState.IsValid) return Page();
 
-            var user = _userRepository.GetAll().FirstOrDefault(u => u.Email == Email && u.Password == Password);
+            var user = _userRepository.GetAll().FirstOrDefault(u => u.Email == Email/* && u.Password == Password*/);
 
             //verificere email og password 
-            if (user != null)
+            if (user != null && BCrypt.Net.BCrypt.Verify(Password, user.Password))
             {
                 //laver security context - vi laver derfor en liste af claims 
                 var Claims = new List<Claim>

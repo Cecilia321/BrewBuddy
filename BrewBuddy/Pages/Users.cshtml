@@ -17,7 +17,7 @@
             <th scope="col">Fødseldag</th>
             <th scope="col">Registrerings dato</th>
             <th scope="col">Email</th>
-            <th scope="col">Password</th>
+            @* <th scope="col">Password</th> *@
         </tr>
     </thead>
     <tbody>
@@ -32,7 +32,7 @@
                 <td>@user.BirthDate</td>
                 <td>@user.RegistrationDate</td>
                 <td>@user.Email</td>
-                <td>@user.Password</td>
+                @* <td>@user.Password</td> *@
             </tr>
         <td>
             <form method="post" asp-page-handler="Delete">

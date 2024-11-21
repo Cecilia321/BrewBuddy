@@ -18,6 +18,9 @@ namespace BrewBuddy.Pages
         [BindProperty]
         public CoffieMachine NewMachine { get; set; }
 
+        [BindProperty]
+        public CoffieMachine UpdatedMachine { get; set; }
+
         //derefter laver vi en konstruktør med repositori
         public CoffieMachinesModel(IRepository<CoffieMachine> repository)
         {
@@ -46,6 +49,30 @@ namespace BrewBuddy.Pages
         {
             _repository.Delete(MachineId);
             return RedirectToPage();
+        }
+
+        public IActionResult OnPostUpdate()
+        {
+            if (!ModelState.IsValid)
+            {
+                coffieMachines = _repository.GetAll();
+                return Page();
+            }
+            _repository.Update(UpdatedMachine);
+            return RedirectToPage();
+        }
+
+        public IActionResult OnPostSelectForUpdate(int MachineId)
+        {
+            var machine = _repository.GetAll().FirstOrDefault(m => m.MachineId == MachineId);
+
+            if (machine != null)
+            {
+                UpdatedMachine = machine;
+            }
+
+            coffieMachines = _repository.GetAll();
+            return Page();
         }
     }
 }
