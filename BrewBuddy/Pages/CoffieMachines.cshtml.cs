@@ -14,12 +14,7 @@ namespace BrewBuddy.Pages
         //denne her laver vi for at holde maskinerne i en liste 
         public List<CoffieMachine> coffieMachines { get; set; }
 
-        //og den her laver vi for at kunne oprette en ny maskine 
-        [BindProperty]
-        public CoffieMachine NewMachine { get; set; }
-
-        [BindProperty]
-        public CoffieMachine UpdatedMachine { get; set; }
+   
 
         //derefter laver vi en konstruktør med repositori
         public CoffieMachinesModel(IRepository<CoffieMachine> repository)
@@ -33,46 +28,6 @@ namespace BrewBuddy.Pages
             coffieMachines = _repository.GetAll();
 
         }
-
-        public IActionResult OnPost()
-        {
-            if (!ModelState.IsValid)
-            {
-                coffieMachines = _repository.GetAll();
-                return Page();
-            }
-            _repository.Add(NewMachine);
-            return RedirectToPage();
-        }
-
-        public IActionResult OnPostDelete(int MachineId)
-        {
-            _repository.Delete(MachineId);
-            return RedirectToPage();
-        }
-
-        public IActionResult OnPostUpdate()
-        {
-            if (!ModelState.IsValid)
-            {
-                coffieMachines = _repository.GetAll();
-                return Page();
-            }
-            _repository.Update(UpdatedMachine);
-            return RedirectToPage();
-        }
-
-        public IActionResult OnPostSelectForUpdate(int MachineId)
-        {
-            var machine = _repository.GetAll().FirstOrDefault(m => m.MachineId == MachineId);
-
-            if (machine != null)
-            {
-                UpdatedMachine = machine;
-            }
-
-            coffieMachines = _repository.GetAll();
-            return Page();
-        }
+        
     }
 }

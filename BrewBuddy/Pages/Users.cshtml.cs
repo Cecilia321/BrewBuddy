@@ -17,9 +17,9 @@ namespace BrewBuddy.Pages
         [BindProperty]
         public User NewUser { get; set; } //og den her laver vi for at kunne oprette en ny maskine 
 
-  
+        //Her genere vi en Bcrypt salt - ellers kunne vi skrive /*workFactor: 12*/ i stedet 
+        string salt = BCrypt.Net.BCrypt.GenerateSalt(12);
 
-        
         public UsersModel(IRepository<User> repository) //derefter laver vi en konstruktør med repositori
         {
             _repository = repository;
@@ -40,7 +40,7 @@ namespace BrewBuddy.Pages
                 return Page();
             }
 
-            NewUser.Password = BCrypt.Net.BCrypt.HashPassword(NewUser.Password, workFactor: 12);
+            NewUser.Password = BCrypt.Net.BCrypt.HashPassword(NewUser.Password, salt);
             _repository.Add(NewUser);
             return RedirectToPage();
         }
