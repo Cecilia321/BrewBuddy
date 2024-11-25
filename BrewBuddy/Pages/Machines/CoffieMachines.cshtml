@@ -45,7 +45,7 @@
     <button type="submit">Tilføj</button>
 </form> *@
 @page
-@model BrewBuddy.Pages.CoffieMachinesModel
+@model CoffieMachinesModel
 @{
     ViewData["Title"] = "Kaffemaskiner";
 }
@@ -65,7 +65,7 @@
     }
 </div>
 
-<a asp-page="/EditCoffieMachines" class="edit-link">Rediger Kaffemaskiner</a>
+<a asp-page="/Machines/EditCoffieMachines" class="edit-link">Rediger Kaffemaskiner</a>
 
 <script>
     function toggleInfo(infoId) {

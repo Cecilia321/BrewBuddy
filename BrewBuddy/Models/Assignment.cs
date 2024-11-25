@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace BrewBuddy.Models;
 
-public partial class Task
+public partial class Assignment
 {
-    public int TaskId { get; set; }
+    public int AssignmentId { get; set; }
 
-    public string TaskName { get; set; } = null!;
+    public string AssignmentName { get; set; } = null!;
 
     public bool IsComplete { get; set; }
 

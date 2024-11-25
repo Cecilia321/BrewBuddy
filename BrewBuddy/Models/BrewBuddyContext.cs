@@ -19,7 +19,7 @@ public partial class BrewBuddyContext : DbContext
 
     public virtual DbSet<MachineInfo> MachineInfos { get; set; }
 
-    public virtual DbSet<Task> Tasks { get; set; }
+    public virtual DbSet<Assignment> Tasks { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
 
@@ -58,14 +58,14 @@ public partial class BrewBuddyContext : DbContext
                 .HasConstraintName("FK__MachineIn__UserI__2E1BDC42");
         });
 
-        modelBuilder.Entity<Task>(entity =>
+        modelBuilder.Entity<Assignment>(entity =>
         {
-            entity.HasKey(e => e.TaskId).HasName("PK__Tasks__7C6949B1D001C0CB");
+            entity.HasKey(e => e.AssignmentId).HasName("PK__Tasks__7C6949B1D001C0CB");
 
             entity.ToTable(tb => tb.HasTrigger("SetDateAndTimeOnComplete"));
 
             entity.Property(e => e.DateAndTime).HasColumnType("datetime");
-            entity.Property(e => e.TaskName).HasMaxLength(50);
+            entity.Property(e => e.AssignmentName).HasMaxLength(50);
         });
 
         modelBuilder.Entity<User>(entity =>

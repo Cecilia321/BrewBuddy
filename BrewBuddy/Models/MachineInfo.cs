@@ -15,7 +15,7 @@ public partial class MachineInfo
 
     public virtual CoffieMachine Machine { get; set; } = null!;
 
-    public virtual Task Task { get; set; } = null!;
+    public virtual Assignment Task { get; set; } = null!;
 
     public virtual User User { get; set; } = null!;
 }

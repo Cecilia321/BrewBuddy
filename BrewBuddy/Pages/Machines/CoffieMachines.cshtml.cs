@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Diagnostics.Metrics;
 
-namespace BrewBuddy.Pages
+namespace BrewBuddy.Pages.Machines
 {
     public class CoffieMachinesModel : PageModel
     {
@@ -13,8 +13,6 @@ namespace BrewBuddy.Pages
 
         //denne her laver vi for at holde maskinerne i en liste 
         public List<CoffieMachine> coffieMachines { get; set; }
-
-   
 
         //derefter laver vi en konstruktør med repositori
         public CoffieMachinesModel(IRepository<CoffieMachine> repository)
@@ -28,6 +26,6 @@ namespace BrewBuddy.Pages
             coffieMachines = _repository.GetAll();
 
         }
-        
+
     }
 }
