@@ -19,7 +19,7 @@ public partial class BrewBuddyContext : DbContext
 
     public virtual DbSet<MachineInfo> MachineInfos { get; set; }
 
-    public virtual DbSet<Assignment> Tasks { get; set; }
+    public virtual DbSet<Assignment> Assignments { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
 
@@ -49,8 +49,8 @@ public partial class BrewBuddyContext : DbContext
                 .HasForeignKey(d => d.MachineId)
                 .HasConstraintName("FK__MachineIn__Machi__2D27B809");
 
-            entity.HasOne(d => d.Task).WithMany(p => p.MachineInfos)
-                .HasForeignKey(d => d.TaskId)
+            entity.HasOne(d => d.Assignment).WithMany(p => p.MachineInfos)
+                .HasForeignKey(d => d.AssignmentId)
                 .HasConstraintName("FK__MachineIn__TaskI__2F10007B");
 
             entity.HasOne(d => d.User).WithMany(p => p.MachineInfos)

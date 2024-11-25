@@ -5,19 +5,35 @@ namespace BrewBuddy.Repositories
 {
     public class AssignmentRepository : IRepository<Assignment>
     {
+        private readonly BrewBuddyContext _context;
+
+        //vi laver en konstruktør som tager brewbuddycontext som parameter 
+        public AssignmentRepository(BrewBuddyContext context)
+        {
+            _context = context;
+        }
         public void Add(Assignment assignment)
         {
-            throw new NotImplementedException();
+            _context.Assignments.Add(assignment);
+            _context.SaveChanges(); 
         }
 
         public void Delete(int Id)
         {
-            throw new NotImplementedException();
+            // Find the coffee machine by its ID
+            var assignment = _context.Assignments.Find(Id);
+
+            // If the machine exists, remove it
+            if (assignment != null)
+            {
+                _context.Assignments.Remove(assignment);
+                _context.SaveChanges(); // Save changes to commit the deletion
+            }
         }
 
         public List<Assignment> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.Assignments.ToList(); //henter alle kaffemaskiner 
         }
 
         public Task<Assignment> GetByIdAsync(int Id)
@@ -25,14 +41,10 @@ namespace BrewBuddy.Repositories
             throw new NotImplementedException();
         }
 
-        public void Update(Assignment entity)
+        public async Task UpdateAsync(Assignment assignment)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateAsync(Assignment entity)
-        {
-            throw new NotImplementedException();
+            _context.Assignments.Update(assignment);
+            await _context.SaveChangesAsync();
         }
     }
 }

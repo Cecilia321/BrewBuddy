@@ -21,6 +21,7 @@ namespace BrewBuddy
             //dette registrere repositoriet, så jeg kan bruge det i razorpagen 
             builder.Services.AddScoped<IRepository<CoffieMachine>, CoffieMachineRepository>();
             builder.Services.AddScoped<IRepository<User>, UserRepository>();
+            builder.Services.AddScoped<IRepository<Assignment>, AssignmentRepository>();
 
             builder.Services.AddAuthentication("MyCookieAuth").AddCookie("MyCookieAuth", options =>
             {

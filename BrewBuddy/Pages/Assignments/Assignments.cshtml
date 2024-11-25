@@ -1,0 +1,47 @@
+﻿@page
+@model BrewBuddy.Pages.Assignments.AssignmentsModel
+@{
+    ViewData["Title"] = "Opgaver";
+}
+
+<h1>Opgaver</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Opgave ID</th>
+            <th>Opgave Navn</th>
+            <th>Fuldført</th>
+            <th>Dato og Tid</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var assignment in Model.Assignments)
+        {
+            <tr>
+                <td>@assignment.AssignmentId</td>
+                <td>@assignment.AssignmentName</td>
+                <td>
+                    @if (assignment.IsComplete)
+                    {
+                        <span class="text-success">Ja</span>
+                    }
+                    else
+                    {
+                        <span class="text-danger">Nej</span>
+                    }
+                </td>
+                <td>
+                    @if (assignment.DateAndTime.HasValue)
+                    {
+                        @assignment.DateAndTime.Value.ToString("dd-MM-yyyy HH:mm")
+                    }
+                    else
+                    {
+                        <em>Ikke angivet</em>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

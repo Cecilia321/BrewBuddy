@@ -11,11 +11,11 @@ public partial class MachineInfo
 
     public int UserId { get; set; }
 
-    public int TaskId { get; set; }
+    public int AssignmentId { get; set; }
 
     public virtual CoffieMachine Machine { get; set; } = null!;
 
-    public virtual Assignment Task { get; set; } = null!;
+    public virtual Assignment Assignment { get; set; } = null!;
 
     public virtual User User { get; set; } = null!;
 }
