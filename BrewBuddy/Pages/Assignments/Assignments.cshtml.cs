@@ -12,6 +12,9 @@ namespace BrewBuddy.Pages.Assignments
         //denne her laver vi for at holde maskinerne i en liste 
         public List<Assignment> Assignments { get; set; }
 
+        [BindProperty]
+        public Assignment NewAssignment { get; set; }
+
         //derefter laver vi en konstruktør med repositori
         public AssignmentsModel(IRepository<Assignment> repository)
         {
@@ -23,6 +26,18 @@ namespace BrewBuddy.Pages.Assignments
         {
             Assignments = _repository.GetAll();
 
+        }
+
+        public IActionResult OnPost()
+        {
+            if (!ModelState.IsValid)
+            {
+                Assignments = _repository.GetAll();
+                return Page();
+            }
+            NewAssignment.DateAndTime = null;
+            _repository.Add(NewAssignment);
+            return RedirectToPage();
         }
     }
 }
