@@ -5,9 +5,11 @@
     {
         //her er alle de metoder som alle repositories skal arve fra, jeg bruger entity ved add og update, da disse metoder kræver hele objektet. 
         void Add(T entity);
-        Task UpdateAsync(T entity);
+        void Update(T entity);
         void Delete(int Id);
         List<T> GetAll();
         Task<T>GetByIdAsync(int Id);
+        T GetAllById(int Id);
+        Task<T> UpdateAsync(T entity);
     }
 }

@@ -2,6 +2,7 @@ using BrewBuddy.Interface;
 using BrewBuddy.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Diagnostics;
 
 namespace BrewBuddy.Pages.Assignments
 {
@@ -38,6 +39,27 @@ namespace BrewBuddy.Pages.Assignments
             NewAssignment.DateAndTime = null;
             _repository.Add(NewAssignment);
             return RedirectToPage();
+        }
+
+        public IActionResult OnPostComplete(int AssignmentId)
+        {
+            //Debug.WriteLine("hallo");
+            //Debug.WriteLine(AssignmentId);
+            var assignment = _repository.GetAllById(AssignmentId);
+            if (assignment == null) 
+            {
+                return Page();
+            }
+            assignment.IsComplete = true;
+            assignment.DateAndTime = DateTime.Now;
+
+            _repository.Update(assignment);
+
+            Assignments = _repository.GetAll();
+
+            return Page();
+
+            
         }
     }
 }

@@ -40,16 +40,37 @@ namespace BrewBuddy.Repositories
             return _context.CoffieMachines.ToList(); //henter alle kaffemaskiner 
         }
 
+        public List<CoffieMachine> GetAllById(int Id)
+        {
+            throw new NotImplementedException();
+        }
 
         public async Task<CoffieMachine> GetByIdAsync(int Id)
         {
             return await _context.CoffieMachines.FirstOrDefaultAsync(m => m.MachineId == Id);
         }
 
+        public void Update(CoffieMachine entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task UpdateAsync(CoffieMachine updateMachine)
         {
             _context.CoffieMachines.Update(updateMachine);
             await _context.SaveChangesAsync();
+        }
+
+        
+
+        CoffieMachine IRepository<CoffieMachine>.GetAllById(int Id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<CoffieMachine> IRepository<CoffieMachine>.UpdateAsync(CoffieMachine entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using BrewBuddy.Interface;
 using BrewBuddy.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BrewBuddy.Repositories
 {
@@ -36,15 +37,25 @@ namespace BrewBuddy.Repositories
             return _context.Assignments.ToList(); //henter alle kaffemaskiner 
         }
 
+        public Assignment GetAllById(int Id)
+        {
+            return _context.Assignments.FirstOrDefault(a => a.AssignmentId == Id);
+        }
+
         public Task<Assignment> GetByIdAsync(int Id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task UpdateAsync(Assignment assignment)
+        public void Update(Assignment assignment)
         {
             _context.Assignments.Update(assignment);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
+        }
+
+        public Task<Assignment> UpdateAsync(Assignment entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }
