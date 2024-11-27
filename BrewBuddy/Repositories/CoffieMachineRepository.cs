@@ -1,6 +1,5 @@
 ﻿using BrewBuddy.Interface;
 using BrewBuddy.Models;
-using Microsoft.AspNetCore.Razor.Hosting;
 using Microsoft.EntityFrameworkCore;
 
 namespace BrewBuddy.Repositories
@@ -45,6 +44,11 @@ namespace BrewBuddy.Repositories
             throw new NotImplementedException();
         }
 
+        public Task<List<CoffieMachine>> GetAllByIdAsync(int Id)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<CoffieMachine> GetByIdAsync(int Id)
         {
             return await _context.CoffieMachines.FirstOrDefaultAsync(m => m.MachineId == Id);
@@ -61,14 +65,7 @@ namespace BrewBuddy.Repositories
             await _context.SaveChangesAsync();
         }
 
-        
-
         CoffieMachine IRepository<CoffieMachine>.GetAllById(int Id)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<CoffieMachine> IRepository<CoffieMachine>.UpdateAsync(CoffieMachine entity)
         {
             throw new NotImplementedException();
         }

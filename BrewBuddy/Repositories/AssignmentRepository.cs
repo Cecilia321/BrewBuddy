@@ -42,6 +42,11 @@ namespace BrewBuddy.Repositories
             return _context.Assignments.FirstOrDefault(a => a.AssignmentId == Id);
         }
 
+        public Task<List<Assignment>> GetAllByIdAsync(int Id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<Assignment> GetByIdAsync(int Id)
         {
             throw new NotImplementedException();
@@ -54,6 +59,11 @@ namespace BrewBuddy.Repositories
         }
 
         public Task<Assignment> UpdateAsync(Assignment entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task IRepository<Assignment>.UpdateAsync(Assignment entity)
         {
             throw new NotImplementedException();
         }

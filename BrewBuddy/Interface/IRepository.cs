@@ -10,6 +10,6 @@
         List<T> GetAll();
         Task<T>GetByIdAsync(int Id);
         T GetAllById(int Id);
-        Task<T> UpdateAsync(T entity);
+        Task UpdateAsync(T entity);
     }
 }

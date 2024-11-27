@@ -64,7 +64,7 @@ public partial class BrewBuddyContext : DbContext
 
             entity.ToTable(tb => tb.HasTrigger("SetDateAndTimeOnComplete"));
 
-            entity.Property(e => e.DateAndTime).HasColumnType("datetime");
+            entity.Property(e => e.FinishedDateAndTime).HasColumnType("datetime");
             entity.Property(e => e.AssignmentName).HasMaxLength(50);
         });
 

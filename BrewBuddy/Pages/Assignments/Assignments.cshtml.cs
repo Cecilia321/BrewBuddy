@@ -36,7 +36,7 @@ namespace BrewBuddy.Pages.Assignments
                 Assignments = _repository.GetAll();
                 return Page();
             }
-            NewAssignment.DateAndTime = null;
+            NewAssignment.FinishedDateAndTime = null;
             _repository.Add(NewAssignment);
             return RedirectToPage();
         }
@@ -51,7 +51,7 @@ namespace BrewBuddy.Pages.Assignments
                 return Page();
             }
             assignment.IsComplete = true;
-            assignment.DateAndTime = DateTime.Now;
+            assignment.FinishedDateAndTime = DateTime.Now;
 
             _repository.Update(assignment);
 
