@@ -57,8 +57,9 @@
     {
         <div class="coffee-machine">
             <h3>@machine.Name</h3>
-            <button class="info-btn" onclick="toggleInfo('info-@machine.MachineId')">Info</button>
-            <div id="info-@machine.MachineId" class="info-section" style="display: none;">
+            <button type="button" class="btn-info"><a asp-page="/Index">bla</a></button>
+            @* <a asp-page="/MachineInfoMappe/MachineInfos" class="info-btn" onclick="toggleInfo('info-@machine.MachineId')">Info</a> *@
+            <div id="info-@machine.MachineId" class="info-section" style="display: none;"> 
                 
             </div>
         </div>
@@ -66,6 +67,7 @@
 </div>
 
 <a asp-page="/Machines/EditCoffieMachines" class="edit-link">Rediger Kaffemaskiner</a>
+
 
 <script>
     function toggleInfo(infoId) {

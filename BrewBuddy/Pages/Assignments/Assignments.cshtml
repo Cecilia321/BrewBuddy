@@ -9,13 +9,19 @@
             <th>Task</th>
             <th>Complete</th>
             <th>Date Completed</th>
+            <th>Beskrivelse</th>
+            <th>maskineId</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var assignment in Model.Assignments)
         {
             <tr>
+                <td>@assignment.DailyDate</td>
                 <td>@assignment.AssignmentName</td>
+                <td>@assignment.Description</td>
+                <td>@assignment.IntervalType</td>
+                <td>@assignment.MachineId</td>
                 <td>
                     @if (!assignment.IsComplete)
                     {
@@ -89,13 +95,64 @@
 </table> *@ 
 
 <h2>Tilføj Ny opgave</h2>
-<form method="post" style="max-width: 500px; margin-top: 20px;">
+@* <form method="post" style="max-width: 500px; margin-top: 20px;">
     <div style="display: flex; align-items: center; margin-bottom: 10px;">
         <label for="AssignmentName">Opgave: </label>
         <input type="text" id="Name" name="NewAssignment.AssignmentName" required style="flex-grow: 1; padding: 5px;" />
+    </div>
+    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+        <label for="Description">Beskrivelse af opgave: </label>
+        <input type="text" id="Beskrivelse" name="NewAssignment.Description" required style="flex-grow: 1; padding: 5px;" />
+    </div>
+    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+        <label for="IntervalType">IntervalType: </label>
+        <input type="text" id="IntervalType" name="NewAssignment.IntervalType" required style="flex-grow: 1; padding: 5px;" />
+    </div>
+    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+        <label for="MachineId">MachineId: </label>
+        <input type="text" id="MachineId" name="NewAssignment.MachineId" required style="flex-grow: 1; padding: 5px;" />
     </div>
  
            
     <button type="submit">Tilføj</button>
 
+</form> *@
+@* <form method="post" style="max-width: 500px; margin-top: 20px;">
+    <div>
+        <label for="AssignmentName">Opgave: </label>
+        <input asp-for="NewAssignment.AssignmentName" type="text" id="AssignmentName" name="AssignmentName" required />
+    </div>
+    <div>
+        <label for="Description">Beskrivelse: </label>
+        <input asp-for="NewAssignment.Description" type="text" id="Description" name="Description" required />
+    </div>
+    <div>
+        <label for="IntervalType">Interval Type: </label>
+        <input asp-for="NewAssignment.IntervalType" type="text" id="IntervalType" name="IntervalType" required />
+    </div>
+    <div>
+        <label for="MachineId">Maskine ID: </label>
+        <input asp-for="NewAssignment.MachineId" type="number" id="MachineId" name="MachineId" required />
+        <p>MachineId indtastet: <span>@Model.NewAssignment.MachineId</span></p>
+    </div>
+    <button type="submit">Tilføj</button>
+</form> *@
+<form method="post" style="max-width: 500px; margin-top: 20px;">
+    <div>
+        <label for="AssignmentName">Opgave: </label>
+        <input asp-for="NewAssignment.AssignmentName" type="text" required />
+    </div>
+    <div>
+        <label for="Description">Beskrivelse: </label>
+        <input asp-for="NewAssignment.Description" type="text" required />
+    </div>
+    <div>
+        <label for="IntervalType">Interval Type: </label>
+        <input asp-for="NewAssignment.IntervalType" type="text" required />
+    </div>
+    <div>
+        <label for="MachineId">Maskine ID: </label>
+        <input asp-for="NewAssignment.MachineId" type="number" required />
+    </div>
+    <button type="submit">Tilføj</button>
 </form>

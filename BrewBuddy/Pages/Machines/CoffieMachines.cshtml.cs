@@ -14,6 +14,10 @@ namespace BrewBuddy.Pages.Machines
         //denne her laver vi for at holde maskinerne i en liste 
         public List<CoffieMachine> coffieMachines { get; set; }
 
+        //og den her laver vi for at kunne oprette en ny maskine 
+        [BindProperty]
+        public CoffieMachine NewMachine { get; set; }
+
         //derefter laver vi en konstruktør med repositori
         public CoffieMachinesModel(IRepository<CoffieMachine> repository)
         {

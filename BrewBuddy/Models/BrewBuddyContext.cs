@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
 namespace BrewBuddy.Models;
-//Denne brewbuddycontext klasse er vores primære bindeled mellem vores applikation og database. 
+
 public partial class BrewBuddyContext : DbContext
 {
     public BrewBuddyContext()
@@ -15,11 +15,11 @@ public partial class BrewBuddyContext : DbContext
     {
     }
 
+    public virtual DbSet<Assignment> Assignments { get; set; }
+
     public virtual DbSet<CoffieMachine> CoffieMachines { get; set; }
 
     public virtual DbSet<MachineInfo> MachineInfos { get; set; }
-
-    public virtual DbSet<Assignment> Assignments { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
 
@@ -29,9 +29,26 @@ public partial class BrewBuddyContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Assignment>(entity =>
+        {
+            entity.HasKey(e => e.AssignmentId).HasName("PK__Assignme__32499E7774790708");
+
+            entity.Property(e => e.AssignmentName).HasMaxLength(50);
+            entity.Property(e => e.DailyDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.FinishedDateAndTime).HasColumnType("datetime");
+            entity.Property(e => e.IntervalType).HasMaxLength(5);
+
+            entity.HasOne(d => d.Machine).WithMany(p => p.Assignments)
+                .HasForeignKey(d => d.MachineId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Assignmen__Machi__2D27B809");
+        });
+
         modelBuilder.Entity<CoffieMachine>(entity =>
         {
-            entity.HasKey(e => e.MachineId).HasName("PK__CoffieMa__44EE5B38A8A30860");
+            entity.HasKey(e => e.MachineId).HasName("PK__CoffieMa__44EE5B38BEC06C80");
 
             entity.ToTable("CoffieMachine");
 
@@ -41,36 +58,26 @@ public partial class BrewBuddyContext : DbContext
 
         modelBuilder.Entity<MachineInfo>(entity =>
         {
-            entity.HasKey(e => e.InfoId).HasName("PK__MachineI__4DEC9D7A52EF3225");
+            entity.HasKey(e => e.InfoId).HasName("PK__MachineI__4DEC9D7A33E8233B");
 
             entity.ToTable("MachineInfo");
 
-            entity.HasOne(d => d.Machine).WithMany(p => p.MachineInfos)
-                .HasForeignKey(d => d.MachineId)
-                .HasConstraintName("FK__MachineIn__Machi__2D27B809");
-
             entity.HasOne(d => d.Assignment).WithMany(p => p.MachineInfos)
                 .HasForeignKey(d => d.AssignmentId)
-                .HasConstraintName("FK__MachineIn__TaskI__2F10007B");
+                .HasConstraintName("FK__MachineIn__Assig__31EC6D26");
+
+            entity.HasOne(d => d.Machine).WithMany(p => p.MachineInfos)
+                .HasForeignKey(d => d.MachineId)
+                .HasConstraintName("FK__MachineIn__Machi__300424B4");
 
             entity.HasOne(d => d.User).WithMany(p => p.MachineInfos)
                 .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK__MachineIn__UserI__2E1BDC42");
-        });
-
-        modelBuilder.Entity<Assignment>(entity =>
-        {
-            entity.HasKey(e => e.AssignmentId).HasName("PK__Tasks__7C6949B1D001C0CB");
-
-            entity.ToTable(tb => tb.HasTrigger("SetDateAndTimeOnComplete"));
-
-            entity.Property(e => e.FinishedDateAndTime).HasColumnType("datetime");
-            entity.Property(e => e.AssignmentName).HasMaxLength(50);
+                .HasConstraintName("FK__MachineIn__UserI__30F848ED");
         });
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CC4CD5065536");
+            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CC4C08E665F3");
 
             entity.Property(e => e.Email).HasMaxLength(50);
             entity.Property(e => e.FirstName).HasMaxLength(50);

@@ -28,14 +28,22 @@ namespace BrewBuddy.Pages.Assignments
             Assignments = _repository.GetAll();
 
         }
-
+            
         public IActionResult OnPost()
         {
+            Debug.WriteLine($"MachineId received: {NewAssignment.MachineId}");
+
             if (!ModelState.IsValid)
             {
+                Debug.WriteLine("ModelState is invalid");
+                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    Debug.WriteLine($"Error: {error.ErrorMessage}");
+                }
                 Assignments = _repository.GetAll();
                 return Page();
             }
+
             NewAssignment.FinishedDateAndTime = null;
             _repository.Add(NewAssignment);
             return RedirectToPage();

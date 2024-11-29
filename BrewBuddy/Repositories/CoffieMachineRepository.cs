@@ -44,10 +44,6 @@ namespace BrewBuddy.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<List<CoffieMachine>> GetAllByIdAsync(int Id)
-        {
-            throw new NotImplementedException();
-        }
 
         public async Task<CoffieMachine> GetByIdAsync(int Id)
         {

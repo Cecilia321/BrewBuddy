@@ -1,6 +1,7 @@
 ﻿using BrewBuddy.Interface;
 using BrewBuddy.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace BrewBuddy.Repositories
 {
@@ -16,7 +17,7 @@ namespace BrewBuddy.Repositories
         public void Add(Assignment assignment)
         {
             _context.Assignments.Add(assignment);
-            _context.SaveChanges(); 
+            _context.SaveChanges();
         }
 
         public void Delete(int Id)
