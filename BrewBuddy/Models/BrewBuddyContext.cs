@@ -31,7 +31,7 @@ public partial class BrewBuddyContext : DbContext
     {
         modelBuilder.Entity<Assignment>(entity =>
         {
-            entity.HasKey(e => e.AssignmentId).HasName("PK__Assignme__32499E7774790708");
+            entity.HasKey(e => e.AssignmentId).HasName("PK__Assignme__32499E7797408718");
 
             entity.Property(e => e.AssignmentName).HasMaxLength(50);
             entity.Property(e => e.DailyDate)
@@ -44,11 +44,15 @@ public partial class BrewBuddyContext : DbContext
                 .HasForeignKey(d => d.MachineId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Assignmen__Machi__2D27B809");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Assignments)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("FK__Assignmen__UserI__2E1BDC42");
         });
 
         modelBuilder.Entity<CoffieMachine>(entity =>
         {
-            entity.HasKey(e => e.MachineId).HasName("PK__CoffieMa__44EE5B38BEC06C80");
+            entity.HasKey(e => e.MachineId).HasName("PK__CoffieMa__44EE5B386F3CE3ED");
 
             entity.ToTable("CoffieMachine");
 
@@ -58,7 +62,7 @@ public partial class BrewBuddyContext : DbContext
 
         modelBuilder.Entity<MachineInfo>(entity =>
         {
-            entity.HasKey(e => e.InfoId).HasName("PK__MachineI__4DEC9D7A33E8233B");
+            entity.HasKey(e => e.InfoId).HasName("PK__MachineI__4DEC9D7A2361C18C");
 
             entity.ToTable("MachineInfo");
 
@@ -68,16 +72,12 @@ public partial class BrewBuddyContext : DbContext
 
             entity.HasOne(d => d.Machine).WithMany(p => p.MachineInfos)
                 .HasForeignKey(d => d.MachineId)
-                .HasConstraintName("FK__MachineIn__Machi__300424B4");
-
-            entity.HasOne(d => d.User).WithMany(p => p.MachineInfos)
-                .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK__MachineIn__UserI__30F848ED");
+                .HasConstraintName("FK__MachineIn__Machi__30F848ED");
         });
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CC4C08E665F3");
+            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CC4CDD14E3E3");
 
             entity.Property(e => e.Email).HasMaxLength(50);
             entity.Property(e => e.FirstName).HasMaxLength(50);

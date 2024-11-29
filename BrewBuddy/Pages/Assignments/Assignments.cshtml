@@ -11,6 +11,7 @@
             <th>Date Completed</th>
             <th>Beskrivelse</th>
             <th>maskineId</th>
+            <th>UserId</th>
         </tr>
     </thead>
     <tbody>
@@ -22,6 +23,7 @@
                 <td>@assignment.Description</td>
                 <td>@assignment.IntervalType</td>
                 <td>@assignment.MachineId</td>
+                <td>@assignment.UserId</td>
                 <td>
                     @if (!assignment.IsComplete)
                     {
@@ -36,6 +38,7 @@
                     }
                 </td>
                 <td>@assignment.FinishedDateAndTime?.ToString("g")</td>
+                <td>@assignment.User?.FirstName</td>
             </tr>
         }
 

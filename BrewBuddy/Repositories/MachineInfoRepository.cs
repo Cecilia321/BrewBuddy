@@ -2,6 +2,7 @@
 using BrewBuddy.Migrations;
 using BrewBuddy.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace BrewBuddy.Repositories
 {
@@ -41,12 +42,13 @@ namespace BrewBuddy.Repositories
 
         public MachineInfo GetAllById(int Id)
         {
-            return _context.MachineInfos.FirstOrDefault(m => m.InfoId == Id);
+            throw new NotImplementedException();
+            //return _context.MachineInfos.FirstOrDefault(i => i.InfoId == Id);
         }
 
-        public Task<MachineInfo> GetByIdAsync(int Id)
+        public async Task<MachineInfo> GetByIdAsync(int Id)
         {
-            throw new NotImplementedException();
+            return await _context.MachineInfos.FirstOrDefaultAsync(i => i.InfoId == Id);
         }
 
         public void Update(MachineInfo updateInfo)

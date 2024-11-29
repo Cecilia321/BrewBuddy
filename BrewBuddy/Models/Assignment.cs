@@ -15,6 +15,8 @@ public partial class Assignment
 
     public int MachineId { get; set; }
 
+    public int? UserId { get; set; }
+
     public string AssignmentName { get; set; } = null!;
 
     public bool IsComplete { get; set; }
@@ -24,4 +26,6 @@ public partial class Assignment
     public virtual CoffieMachine? Machine { get; set; }
 
     public virtual ICollection<MachineInfo> MachineInfos { get; set; } = new List<MachineInfo>();
+
+    public virtual User? User { get; set; }
 }

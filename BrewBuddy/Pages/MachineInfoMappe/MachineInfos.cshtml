@@ -1,4 +1,20 @@
-﻿@page
+﻿@page "{id:int}"
 @model BrewBuddy.Pages.MachineInfoMappe.MachineInfosModel
-@{
+@* @{
+    ViewData["Title"] = "Maskine Info";
 }
+
+<h1>Information om maskine</h1>
+
+@if (Model.Info != null)
+{
+    <div>
+        <h2>@Model.Info.Machine.Name</h2>
+        <p>Bruger ID: @Model.Info.UserId</p>
+        <p>Assignment ID: @Model.Info.AssignmentId</p>
+    </div>
+}
+else
+{
+    <p>Ingen oplysninger fundet for denne maskine.</p>
+} *@

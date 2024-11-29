@@ -57,7 +57,7 @@
     {
         <div class="coffee-machine">
             <h3>@machine.Name</h3>
-            <button type="button" class="btn-info"><a asp-page="/Index">bla</a></button>
+            <button type="button" class="btn-info"><a asp-page="/MachineInfoMappe/MachineInfos" asp-route-id="@machine.MachineId">Info</a></button>
             @* <a asp-page="/MachineInfoMappe/MachineInfos" class="info-btn" onclick="toggleInfo('info-@machine.MachineId')">Info</a> *@
             <div id="info-@machine.MachineId" class="info-section" style="display: none;"> 
                 

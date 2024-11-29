@@ -9,13 +9,9 @@ public partial class MachineInfo
 
     public int MachineId { get; set; }
 
-    public int UserId { get; set; }
-
     public int AssignmentId { get; set; }
 
     public virtual Assignment Assignment { get; set; } = null!;
 
     public virtual CoffieMachine Machine { get; set; } = null!;
-
-    public virtual User User { get; set; } = null!;
 }

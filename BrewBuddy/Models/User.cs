@@ -23,5 +23,5 @@ public partial class User
 
     public string Password { get; set; } = null!;
 
-    public virtual ICollection<MachineInfo> MachineInfos { get; set; } = new List<MachineInfo>();
+    public virtual ICollection<Assignment> Assignments { get; set; } = new List<Assignment>();
 }

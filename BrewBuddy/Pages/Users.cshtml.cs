@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BrewBuddy.Pages
 {
-    [Authorize(Policy = "AdminOnly")]
+    //[Authorize(Policy = "AdminOnly")]
     public class UsersModel : PageModel
     {
         private readonly IRepository<User> _repository; //vi statrer med at injektisere repositoriet i coffiemachinmodel

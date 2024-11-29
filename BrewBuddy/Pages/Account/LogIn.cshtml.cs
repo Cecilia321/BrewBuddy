@@ -38,8 +38,10 @@ namespace BrewBuddy.Pages.Account
                 //laver security context - vi laver derfor en liste af claims 
                 var Claims = new List<Claim>
                 {
-                    //new Claim(ClaimTypes.Name, user.FirstName),
+                    new Claim(ClaimTypes.Name, user.FirstName),
                     new Claim(ClaimTypes.Email, user.Email),
+                    //new Claim(ClaimTypes.NameIdentifier, user.FirstName),
+                    new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
                     new Claim("Role", user.Role), //til vores policy, ved at tilføje dette claim kan vi nu bruge vore policy med samme "Role", "Admin"
                 };
                 
