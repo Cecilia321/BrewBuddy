@@ -17,15 +17,15 @@ public partial class Assignment
 
     public int? UserId { get; set; }
 
-    public string AssignmentName { get; set; } = null!;
+    public string Type { get; set; } = null!;
+
+    public decimal? Amount { get; set; }
 
     public bool IsComplete { get; set; }
 
     public DateTime? FinishedDateAndTime { get; set; }
 
     public virtual CoffieMachine? Machine { get; set; }
-
-    public virtual ICollection<MachineInfo> MachineInfos { get; set; } = new List<MachineInfo>();
 
     public virtual User? User { get; set; }
 }

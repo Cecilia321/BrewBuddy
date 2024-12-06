@@ -1,7 +1,48 @@
 ﻿@page
 @model AssignmentsModel
+<h2>Dagens løste opgaver</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Task</th>
+            <th>Date Completed</th>
+            <th>User</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var assignment in Model.TodaysCompletedAssignments)
+        {
+            <tr>
+                <td>@assignment.Type</td>
+                <td>@assignment.FinishedDateAndTime?.ToString("g")</td>
+                <td>@assignment.User?.FirstName</td>
+            </tr>
+        }
+    </tbody>
+</table>
 
-<h1>Assignments</h1>
+<h2>Gårdagens løste opgaver</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Task</th>
+            <th>Date Completed</th>
+            <th>User</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var assignment in Model.YesterdaysCompletedAssignments)
+        {
+            <tr>
+                <td>@assignment.Type</td>
+                <td>@assignment.FinishedDateAndTime?.ToString("g")</td>
+                <td>@assignment.User?.FirstName</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h1>Ikke løste</h1>
 
 <table>
     <thead>
@@ -15,13 +56,35 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var assignment in Model.Assignments)
+        @foreach (var assignment in Model.IncompleteAssignments)
         {
             <tr>
-                <td>@assignment.DailyDate</td>
-                <td>@assignment.AssignmentName</td>
                 <td>@assignment.Description</td>
+                <td>@assignment.DailyDate</td>
                 <td>@assignment.IntervalType</td>
+                <td>@assignment.Type</td>
+                <td>@assignment.Amount</td>
+                <td>@assignment.Amount</td>
+
+                <td>
+                    @if (!assignment.IsComplete)
+                    {
+                        <form method="post" asp-page-handler="Complete">
+                            <input type="hidden" name="AssignmentId" value="@assignment.AssignmentId" />
+
+                            @* Amount input field. It's optional *@
+                            <label for="Amount-@assignment.AssignmentId">Amount: </label>
+                            <input type="number" id="Amount-@assignment.AssignmentId" name="Amount" value="@assignment.Amount" />
+
+                            <button type="submit">Mark Complete</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <span>Completed</span> @* If the task is complete, show 'Completed' and hide the button *@
+                    }
+                </td>
+                
                 <td>@assignment.MachineId</td>
                 <td>@assignment.UserId</td>
                 <td>
@@ -29,7 +92,8 @@
                     {
                         <form method="post" asp-page-handler="Complete">
                             <input type="hidden" name="AssignmentId" value="@assignment.AssignmentId" />
-                            <button type="submit">Mark Complete</button>
+                            <input type="hidden" id="Amount-@assignment.AssignmentId" name="Amount" value="@assignment.Amount" />
+                            @* <button type="submit">Mark Complete</button> *@
                         </form>
                     }
                     else
@@ -39,6 +103,7 @@
                 </td>
                 <td>@assignment.FinishedDateAndTime?.ToString("g")</td>
                 <td>@assignment.User?.FirstName</td>
+                <td>@assignment.Amount</td>
             </tr>
         }
 
@@ -143,7 +208,7 @@
 <form method="post" style="max-width: 500px; margin-top: 20px;">
     <div>
         <label for="AssignmentName">Opgave: </label>
-        <input asp-for="NewAssignment.AssignmentName" type="text" required />
+        <input asp-for="NewAssignment.Type" type="text" required />
     </div>
     <div>
         <label for="Description">Beskrivelse: </label>

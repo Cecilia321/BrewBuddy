@@ -19,7 +19,7 @@ public partial class BrewBuddyContext : DbContext
 
     public virtual DbSet<CoffieMachine> CoffieMachines { get; set; }
 
-    public virtual DbSet<MachineInfo> MachineInfos { get; set; }
+    public virtual DbSet<Statistik> Statistiks { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
 
@@ -31,28 +31,31 @@ public partial class BrewBuddyContext : DbContext
     {
         modelBuilder.Entity<Assignment>(entity =>
         {
-            entity.HasKey(e => e.AssignmentId).HasName("PK__Assignme__32499E7797408718");
+            entity.HasKey(e => e.AssignmentId).HasName("PK__Assignme__32499E770FB98F4E");
 
-            entity.Property(e => e.AssignmentName).HasMaxLength(50);
+            entity.ToTable(tb => tb.HasTrigger("UpdateStat"));
+
+            entity.Property(e => e.Amount).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.DailyDate)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
             entity.Property(e => e.FinishedDateAndTime).HasColumnType("datetime");
-            entity.Property(e => e.IntervalType).HasMaxLength(5);
+            entity.Property(e => e.IntervalType).HasMaxLength(50);
+            entity.Property(e => e.Type).HasMaxLength(50);
 
             entity.HasOne(d => d.Machine).WithMany(p => p.Assignments)
                 .HasForeignKey(d => d.MachineId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Assignmen__Machi__2D27B809");
+                .HasConstraintName("FK__Assignmen__Machi__2E1BDC42");
 
             entity.HasOne(d => d.User).WithMany(p => p.Assignments)
                 .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK__Assignmen__UserI__2E1BDC42");
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("FK__Assignmen__UserI__2F10007B");
         });
 
         modelBuilder.Entity<CoffieMachine>(entity =>
         {
-            entity.HasKey(e => e.MachineId).HasName("PK__CoffieMa__44EE5B386F3CE3ED");
+            entity.HasKey(e => e.MachineId).HasName("PK__CoffieMa__44EE5B385B002544");
 
             entity.ToTable("CoffieMachine");
 
@@ -60,24 +63,21 @@ public partial class BrewBuddyContext : DbContext
             entity.Property(e => e.Name).HasMaxLength(50);
         });
 
-        modelBuilder.Entity<MachineInfo>(entity =>
+        modelBuilder.Entity<Statistik>(entity =>
         {
-            entity.HasKey(e => e.InfoId).HasName("PK__MachineI__4DEC9D7A2361C18C");
+            entity
+                .HasNoKey()
+                .ToTable("Statistik");
 
-            entity.ToTable("MachineInfo");
-
-            entity.HasOne(d => d.Assignment).WithMany(p => p.MachineInfos)
-                .HasForeignKey(d => d.AssignmentId)
-                .HasConstraintName("FK__MachineIn__Assig__31EC6D26");
-
-            entity.HasOne(d => d.Machine).WithMany(p => p.MachineInfos)
-                .HasForeignKey(d => d.MachineId)
-                .HasConstraintName("FK__MachineIn__Machi__30F848ED");
+            entity.Property(e => e.Amount).HasColumnType("decimal(10, 2)");
+            entity.Property(e => e.MonthlyAmount).HasColumnType("decimal(10, 2)");
+            entity.Property(e => e.StatId).ValueGeneratedOnAdd();
+            entity.Property(e => e.Type).HasMaxLength(50);
         });
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CC4CDD14E3E3");
+            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CC4C703976DF");
 
             entity.Property(e => e.Email).HasMaxLength(50);
             entity.Property(e => e.FirstName).HasMaxLength(50);

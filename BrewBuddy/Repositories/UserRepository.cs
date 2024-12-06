@@ -37,12 +37,7 @@ namespace BrewBuddy.Repositories
             return _context.Users.ToList();
         }
 
-        public List<User> GetAllById(int Id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<User>> GetAllByIdAsync(int Id)
+        public User GetAllById(int Id)
         {
             throw new NotImplementedException();
         }
@@ -58,11 +53,6 @@ namespace BrewBuddy.Repositories
         }
 
         public Task UpdateAsync(User entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        User IRepository<User>.GetAllById(int Id)
         {
             throw new NotImplementedException();
         }

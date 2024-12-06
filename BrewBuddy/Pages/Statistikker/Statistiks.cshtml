@@ -1,0 +1,30 @@
+﻿@page
+@model BrewBuddy.Pages.Statistikker.StatistiksModel
+@{
+}
+<h1>statistik</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Maskine Id</th>
+            <th>Dato</th>
+            <th>Type</th>
+            <th>Amount</th>
+            <th>MonthlyAmount</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var s in Model.Stat)
+        {
+            <tr>
+                <td>@s.MachineId</td>
+                <td>@s.FinishDateAndTime</td>
+                <td>@s.Type</td>
+                <td>@s.Amount</td>
+                <td>@s.MonthlyAmount</td>   
+                </tr>
+        }
+
+    </tbody>
+</table>

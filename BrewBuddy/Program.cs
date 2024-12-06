@@ -22,7 +22,8 @@ namespace BrewBuddy
             builder.Services.AddScoped<IRepository<CoffieMachine>, CoffieMachineRepository>();
             builder.Services.AddScoped<IRepository<User>, UserRepository>();
             builder.Services.AddScoped<IRepository<Assignment>, AssignmentRepository>();
-            builder.Services.AddScoped<IRepository<MachineInfo>, MachineInfoRepository>();
+            builder.Services.AddScoped<IRepository<Statistik>, StatistikRepository>();
+           
 
             builder.Services.AddAuthentication("MyCookieAuth").AddCookie("MyCookieAuth", options =>
             {

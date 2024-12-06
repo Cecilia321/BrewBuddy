@@ -14,6 +14,9 @@ namespace BrewBuddy.Pages.Assignments
 
         //denne her laver vi for at holde maskinerne i en liste 
         public List<Assignment> Assignments { get; set; }
+        public List<Assignment> IncompleteAssignments { get; set; }
+        public List<Assignment> TodaysCompletedAssignments { get; set; }
+        public List<Assignment> YesterdaysCompletedAssignments { get; set; }
 
         [BindProperty]
         public Assignment NewAssignment { get; set; }
@@ -27,9 +30,9 @@ namespace BrewBuddy.Pages.Assignments
 
         public void OnGet()
         {
-            Assignments = _repository.GetAll();
-            Debug.WriteLine($"Assignments count: {Assignments?.Count ?? 0}");
-
+            // Get all assignments from the repository
+            var allAssignments = _repository.GetAll();
+            PopulateAssignmentLists(allAssignments);
         }
 
         public IActionResult OnPost()
@@ -74,8 +77,15 @@ namespace BrewBuddy.Pages.Assignments
 
 
 
-        public IActionResult OnPostComplete(int AssignmentId)
+        public IActionResult OnPostComplete(int AssignmentId, decimal? Amount)
         {
+            // Check if Amount is valid
+            if (Amount < 0)
+            {
+                ModelState.AddModelError("Amount", "Beløbet skal være større end 0.");
+                IncompleteAssignments = GetIncompleteAssignments(_repository.GetAll()); // Refresh assignments list
+                return Page(); // Return to the page with the error message
+            }
             // Hent opgaven fra databasen
             var assignment = _repository.GetAllById(AssignmentId);
             if (assignment == null)
@@ -98,16 +108,52 @@ namespace BrewBuddy.Pages.Assignments
             assignment.IsComplete = true;
             assignment.FinishedDateAndTime = DateTime.Now;
             assignment.UserId = userId;
+            assignment.Amount = Amount;
+          
 
             // Opdater opgaven i databasen
             _repository.Update(assignment);
 
             // Opdater listen over opgaver
-            Assignments = _repository.GetAll();
+            PopulateAssignmentLists(_repository.GetAll());
 
             return Page();
         }
 
+  
+        // Metode til at opdatere listerne
+        private void PopulateAssignmentLists(IEnumerable<Assignment> allAssignments)
+        {
+            IncompleteAssignments = GetIncompleteAssignments(allAssignments);
+            TodaysCompletedAssignments = GetTodaysCompletedAssignments(allAssignments);
+            YesterdaysCompletedAssignments = GetYesterdaysCompletedAssignments(allAssignments);
+        }
+
+        // Metoder til filtrering
+        private List<Assignment> GetIncompleteAssignments(IEnumerable<Assignment> allAssignments)
+        {
+            return allAssignments
+                .Where(a => !a.IsComplete)
+                .ToList();
+        }
+
+        private List<Assignment> GetTodaysCompletedAssignments(IEnumerable<Assignment> allAssignments)
+        {
+            var today = DateTime.Today;
+            return allAssignments
+                .Where(a => a.IsComplete && a.FinishedDateAndTime?.Date == today)
+                .OrderBy(a => a.FinishedDateAndTime)
+                .ToList();
+        }
+
+        private List<Assignment> GetYesterdaysCompletedAssignments(IEnumerable<Assignment> allAssignments)
+        {
+            var yesterday = DateTime.Today.AddDays(-1);
+            return allAssignments
+                .Where(a => a.IsComplete && a.FinishedDateAndTime?.Date == yesterday)
+                .OrderBy(a => a.FinishedDateAndTime)
+                .ToList();
+        }
 
     }
 }
