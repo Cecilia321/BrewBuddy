@@ -31,7 +31,7 @@ public partial class BrewBuddyContext : DbContext
     {
         modelBuilder.Entity<Assignment>(entity =>
         {
-            entity.HasKey(e => e.AssignmentId).HasName("PK__Assignme__32499E770FB98F4E");
+            entity.HasKey(e => e.AssignmentId).HasName("PK__Assignme__32499E77A5CE97C8");
 
             entity.ToTable(tb => tb.HasTrigger("UpdateStat"));
 
@@ -55,7 +55,7 @@ public partial class BrewBuddyContext : DbContext
 
         modelBuilder.Entity<CoffieMachine>(entity =>
         {
-            entity.HasKey(e => e.MachineId).HasName("PK__CoffieMa__44EE5B385B002544");
+            entity.HasKey(e => e.MachineId).HasName("PK__CoffieMa__44EE5B38C90DF6AE");
 
             entity.ToTable("CoffieMachine");
 
@@ -77,7 +77,7 @@ public partial class BrewBuddyContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CC4C703976DF");
+            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CC4CAB51B4B4");
 
             entity.Property(e => e.Email).HasMaxLength(50);
             entity.Property(e => e.FirstName).HasMaxLength(50);
