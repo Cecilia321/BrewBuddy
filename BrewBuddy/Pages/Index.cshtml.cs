@@ -43,6 +43,7 @@ namespace BrewBuddy.Pages
                     //new Claim(ClaimTypes.NameIdentifier, user.FirstName),
                     new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
                     new Claim("Role", user.Role), //til vores policy, ved at tilføje dette claim kan vi nu bruge vore policy med samme "Role", "Admin"
+                    
                 };
 
                 var identity = new ClaimsIdentity(Claims, "MyCookieAuth"); //Vi tilføjer nu listen af claims til en identity, vi bruger claimsidentity, så vi kan tilføje claims til og vores authenticationtype

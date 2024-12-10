@@ -25,6 +25,8 @@ namespace BrewBuddy.Pages.Assignments
         public AssignmentsModel(IRepository<Assignment> repository)
         {
             _repository = repository;
+
+      
         }
 
 
@@ -77,48 +79,50 @@ namespace BrewBuddy.Pages.Assignments
 
 
 
-        public IActionResult OnPostComplete(int AssignmentId, decimal? Amount)
-        {
-            // Check if Amount is valid
-            if (Amount < 0)
-            {
-                ModelState.AddModelError("Amount", "Beløbet skal være større end 0.");
-                IncompleteAssignments = GetIncompleteAssignments(_repository.GetAll()); // Refresh assignments list
-                return Page(); // Return to the page with the error message
-            }
-            // Hent opgaven fra databasen
-            var assignment = _repository.GetAllById(AssignmentId);
-            if (assignment == null)
-            {
-                ModelState.AddModelError("", "Opgaven findes ikke.");
-                Assignments = _repository.GetAll();
-                return Page();
-            }
+        //public IActionResult OnPostComplete(int AssignmentId, decimal? Amount)
+        //{
+        //    // Check if Amount is valid
+        //    if (Amount < 0)
+        //    {
+        //        ModelState.AddModelError("Amount", "Beløbet skal være større end 0.");
+        //        IncompleteAssignments = GetIncompleteAssignments(_repository.GetAll()); // Refresh assignments list
+        //        return Page(); // Return to the page with the error message
+        //    }
+        //    // Hent opgaven fra databasen
+        //    var assignment = _repository.GetAllById(AssignmentId);
+        //    if (assignment == null)
+        //    {
+        //        ModelState.AddModelError("", "Opgaven findes ikke.");
+        //        IncompleteAssignments = GetIncompleteAssignments(_repository.GetAll());
+        //        return Page();
+        //    }
 
-            // Hent UserId fra claims
-            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (string.IsNullOrEmpty(userIdString) || !int.TryParse(userIdString, out int userId))
-            {
-                ModelState.AddModelError("", "Du skal være logget ind for at fuldføre en opgave.");
-                Assignments = _repository.GetAll();
-                return Page();
-            }
+        //    // Hent UserId fra claims
+        //    var userIdString = User.FindFirstValue(ClaimTypes.Name);
+        //    if (string.IsNullOrEmpty(userIdString) || !int.TryParse(userIdString, out int userId))
+        //    {
+        //        ModelState.AddModelError("","Du skal være logget ind for at fuldføre en opgave.");
+        //        IncompleteAssignments = GetIncompleteAssignments(_repository.GetAll());
+        //        return Page();
+        //    }
+
+            
 
             // Marker opgaven som fuldført og tildel UserId
-            assignment.IsComplete = true;
-            assignment.FinishedDateAndTime = DateTime.Now;
-            assignment.UserId = userId;
-            assignment.Amount = Amount;
+        //    assignment.IsComplete = true;
+        //    assignment.FinishedDateAndTime = DateTime.Now;
+        //    assignment.UserId = userId;
+        //    assignment.Amount = Amount;
           
 
-            // Opdater opgaven i databasen
-            _repository.Update(assignment);
+        //    // Opdater opgaven i databasen
+        //    _repository.Update(assignment);
 
-            // Opdater listen over opgaver
-            PopulateAssignmentLists(_repository.GetAll());
+        //    // Opdater listen over opgaver
+        //    PopulateAssignmentLists(_repository.GetAll());
 
-            return Page();
-        }
+        //    return Page();
+        //}
 
   
         // Metode til at opdatere listerne
@@ -141,9 +145,13 @@ namespace BrewBuddy.Pages.Assignments
         {
             var today = DateTime.Today;
             return allAssignments
+                 // Sørg for at inkludere User
                 .Where(a => a.IsComplete && a.FinishedDateAndTime?.Date == today)
+     
                 .OrderBy(a => a.FinishedDateAndTime)
+                
                 .ToList();
+                
         }
 
         private List<Assignment> GetYesterdaysCompletedAssignments(IEnumerable<Assignment> allAssignments)

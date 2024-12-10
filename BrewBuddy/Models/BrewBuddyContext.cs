@@ -31,9 +31,7 @@ public partial class BrewBuddyContext : DbContext
     {
         modelBuilder.Entity<Assignment>(entity =>
         {
-            entity.HasKey(e => e.AssignmentId).HasName("PK__Assignme__32499E778C1D5A54");
-
-            entity.ToTable(tb => tb.HasTrigger("UpdateStat"));
+            entity.HasKey(e => e.AssignmentId).HasName("PK__Assignme__32499E77ADBB3DB3");
 
             entity.Property(e => e.Amount).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.DailyDate)
@@ -45,12 +43,12 @@ public partial class BrewBuddyContext : DbContext
 
             entity.HasOne(d => d.Machine).WithMany(p => p.Assignments)
                 .HasForeignKey(d => d.MachineId)
-                .HasConstraintName("FK__Assignmen__Machi__2F10007B");
+                .HasConstraintName("FK__Assignmen__Machi__398D8EEE");
 
             entity.HasOne(d => d.User).WithMany(p => p.Assignments)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.SetNull)
-                .HasConstraintName("FK__Assignmen__UserI__300424B4");
+                .HasConstraintName("FK__Assignmen__UserI__3A81B327");
         });
 
         modelBuilder.Entity<CoffieMachine>(entity =>

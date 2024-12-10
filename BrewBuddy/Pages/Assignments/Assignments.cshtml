@@ -1,226 +1,121 @@
 ﻿@page
 @model AssignmentsModel
-<h2>Dagens løste opgaver</h2>
-<table>
-    <thead>
-        <tr>
-            <th>Task</th>
-            <th>Date Completed</th>
-            <th>User</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var assignment in Model.TodaysCompletedAssignments)
-        {
-            <tr>
-                <td>@assignment.Type</td>
-                <td>@assignment.FinishedDateAndTime?.ToString("g")</td>
-                <td>@assignment.User?.FirstName</td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-<h2>Gårdagens løste opgaver</h2>
-<table>
-    <thead>
-        <tr>
-            <th>Task</th>
-            <th>Date Completed</th>
-            <th>User</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var assignment in Model.YesterdaysCompletedAssignments)
-        {
-            <tr>
-                <td>@assignment.Type</td>
-                <td>@assignment.FinishedDateAndTime?.ToString("g")</td>
-                <td>@assignment.User?.FirstName</td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-<h1>Ikke løste</h1>
-
-<table>
-    <thead>
-        <tr>
-            <th>Task</th>
-            <th>Complete</th>
-            <th>Date Completed</th>
-            <th>Beskrivelse</th>
-            <th>maskineId</th>
-            <th>UserId</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var assignment in Model.IncompleteAssignments)
-        {
-            <tr>
-                <td>@assignment.Description</td>
-                <td>@assignment.DailyDate</td>
-                <td>@assignment.IntervalType</td>
-                <td>@assignment.Type</td>
-                <td>@assignment.Amount</td>
-                <td>@assignment.Amount</td>
-
-                <td>
-                    @if (!assignment.IsComplete)
-                    {
-                        <form method="post" asp-page-handler="Complete">
-                            <input type="hidden" name="AssignmentId" value="@assignment.AssignmentId" />
-
-                            @* Amount input field. It's optional *@
-                            <label for="Amount-@assignment.AssignmentId">Amount: </label>
-                            <input type="number" id="Amount-@assignment.AssignmentId" name="Amount" value="@assignment.Amount" />
-
-                            <button type="submit">Mark Complete</button>
-                        </form>
-                    }
-                    else
-                    {
-                        <span>Completed</span> @* If the task is complete, show 'Completed' and hide the button *@
-                    }
-                </td>
-                
-                <td>@assignment.MachineId</td>
-                <td>@assignment.UserId</td>
-                <td>
-                    @if (!assignment.IsComplete)
-                    {
-                        <form method="post" asp-page-handler="Complete">
-                            <input type="hidden" name="AssignmentId" value="@assignment.AssignmentId" />
-                            <input type="hidden" id="Amount-@assignment.AssignmentId" name="Amount" value="@assignment.Amount" />
-                            @* <button type="submit">Mark Complete</button> *@
-                        </form>
-                    }
-                    else
-                    {
-                        <span>Completed</span>
-                    }
-                </td>
-                <td>@assignment.FinishedDateAndTime?.ToString("g")</td>
-                <td>@assignment.User?.FirstName</td>
-                <td>@assignment.Amount</td>
-            </tr>
-        }
-
-    </tbody>
-</table>
-
-@* @* @page
-@model BrewBuddy.Pages.Assignments.AssignmentsModel
 @{
     ViewData["Title"] = "Opgaver";
 }
 
-<h1>Opgaver</h1>
+<h1>Opgaver grupperet efter maskine</h1>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Opgave ID</th>
-            <th>Opgave Navn</th>
-            <th>Fuldført</th>
-            <th>Dato og Tid</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var assignment in Model.Assignments)
+<!-- Vis ufuldstændige opgaver, hvis de findes -->
+@if (Model.IncompleteAssignments != null && Model.IncompleteAssignments.Any())
+{
+    @foreach (var dateGroup in Model.IncompleteAssignments.GroupBy(a => a.DailyDate))
+    {
+        <h2>Dato: @dateGroup.Key?.ToString("dd-MM-yyyy")</h2> <!-- DailyDate vises én gang pr. dato -->
+        @foreach (var machineGroup in dateGroup.GroupBy(a => a.MachineId))
         {
-            <tr>
-                <td>@assignment.AssignmentId</td>
-                <td>@assignment.AssignmentName</td>
-                <div class="form.chek" style="display: flex; align-items: center; margin-bottom: 10px;">
-                    <label class="form-check-label" for="IsComplete">IsComplete</label>
-                    <input class="form-check-input" type="checkbox" id="IsComplete" name="NewAssignment.IsComplete" required style="flex-grow: 1; padding: 5px;" />
-                    @* <input  type="checkbox" value="" id="flexCheckChecked" checked> *@
-        @*         <td>
-                    @if (assignment.IsComplete)
+            <h3>Maskine ID: @machineGroup.Key</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Task</th>
+                        <th>Interval</th>
+                        <th>Description</th>
+                        <th>User</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var assignment in machineGroup)
                     {
-                        <span class="text-success">Ja</span>
+                        <tr>
+                            <td>@assignment.Type</td>
+                            <td>@assignment.IntervalType</td>
+                            <td>@assignment.Description</td>
+                            <td>@assignment.User?.FirstName</td>
+                            <td>
+                                <!-- Form til at markere opgaven som fuldført -->
+                                @if (!assignment.IsComplete)
+                                {
+                                    <form method="post" asp-page-handler="Complete">
+                                        <input type="hidden" name="AssignmentId" value="@assignment.AssignmentId" />
+                                        <label for="Amount-@assignment.AssignmentId">Amount:</label>
+                                        <input type="number" id="Amount-@assignment.AssignmentId" name="Amount" value="@assignment.Amount" />
+                                        <button type="submit" class="btn btn-primary">Mark Complete</button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <span class="text-success">Completed</span>
+                                }
+                            </td>
+                        </tr>
                     }
-                    else
-                    {
-                        <span class="text-danger">Nej</span>
-                    }
-                </td>
-                <td>
-                    @if (assignment.DateAndTime.HasValue)
-                    {
-                        @assignment.DateAndTime.Value.ToString("dd-MM-yyyy HH:mm")
-                    }
-                    else
-                    {
-                        <em>Ikke angivet</em>
-                    }
-                </td>
-            </tr>
+                </tbody>
+            </table>
         }
-    </tbody>
-</table> *@ 
+    }
+}
+else
+{
+    <p>Der er endnu ikke oprettet nogen ufuldstændige opgaver.</p>
+}
 
-<h2>Tilføj Ny opgave</h2>
-@* <form method="post" style="max-width: 500px; margin-top: 20px;">
-    <div style="display: flex; align-items: center; margin-bottom: 10px;">
-        <label for="AssignmentName">Opgave: </label>
-        <input type="text" id="Name" name="NewAssignment.AssignmentName" required style="flex-grow: 1; padding: 5px;" />
-    </div>
-    <div style="display: flex; align-items: center; margin-bottom: 10px;">
-        <label for="Description">Beskrivelse af opgave: </label>
-        <input type="text" id="Beskrivelse" name="NewAssignment.Description" required style="flex-grow: 1; padding: 5px;" />
-    </div>
-    <div style="display: flex; align-items: center; margin-bottom: 10px;">
-        <label for="IntervalType">IntervalType: </label>
-        <input type="text" id="IntervalType" name="NewAssignment.IntervalType" required style="flex-grow: 1; padding: 5px;" />
-    </div>
-    <div style="display: flex; align-items: center; margin-bottom: 10px;">
-        <label for="MachineId">MachineId: </label>
-        <input type="text" id="MachineId" name="NewAssignment.MachineId" required style="flex-grow: 1; padding: 5px;" />
-    </div>
- 
-           
-    <button type="submit">Tilføj</button>
+<h2>Dagens løste opgaver</h2>
+@if (Model.TodaysCompletedAssignments != null && Model.TodaysCompletedAssignments.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Task</th>
+                <th>Amount</th>
+                <th>Date Completed</th>
+                <th>User</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var assignment in Model.TodaysCompletedAssignments)
+            {
+                <tr>
+                    <td>@assignment.Type</td>
+                    <td>@assignment.Amount</td>
+                    <td>@assignment.FinishedDateAndTime?.ToString("g")</td>
+                    <td>@assignment.UserId</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Der er ingen løste opgaver i dag.</p>
+}
 
-</form> *@
-@* <form method="post" style="max-width: 500px; margin-top: 20px;">
-    <div>
-        <label for="AssignmentName">Opgave: </label>
-        <input asp-for="NewAssignment.AssignmentName" type="text" id="AssignmentName" name="AssignmentName" required />
-    </div>
-    <div>
-        <label for="Description">Beskrivelse: </label>
-        <input asp-for="NewAssignment.Description" type="text" id="Description" name="Description" required />
-    </div>
-    <div>
-        <label for="IntervalType">Interval Type: </label>
-        <input asp-for="NewAssignment.IntervalType" type="text" id="IntervalType" name="IntervalType" required />
-    </div>
-    <div>
-        <label for="MachineId">Maskine ID: </label>
-        <input asp-for="NewAssignment.MachineId" type="number" id="MachineId" name="MachineId" required />
-        <p>MachineId indtastet: <span>@Model.NewAssignment.MachineId</span></p>
-    </div>
-    <button type="submit">Tilføj</button>
-</form> *@
-<form method="post" style="max-width: 500px; margin-top: 20px;">
-    <div>
-        <label for="AssignmentName">Opgave: </label>
-        <input asp-for="NewAssignment.Type" type="text" required />
-    </div>
-    <div>
-        <label for="Description">Beskrivelse: </label>
-        <input asp-for="NewAssignment.Description" type="text" required />
-    </div>
-    <div>
-        <label for="IntervalType">Interval Type: </label>
-        <input asp-for="NewAssignment.IntervalType" type="text" required />
-    </div>
-    <div>
-        <label for="MachineId">Maskine ID: </label>
-        <input asp-for="NewAssignment.MachineId" type="number" required />
-    </div>
-    <button type="submit">Tilføj</button>
-</form>
+<h2>Gårdagens løste opgaver</h2>
+@if (Model.YesterdaysCompletedAssignments != null && Model.YesterdaysCompletedAssignments.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Task</th>
+                <th>Date Completed</th>
+                <th>User</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var assignment in Model.YesterdaysCompletedAssignments)
+            {
+                <tr>
+                    <td>@assignment.Type</td>
+                    <td>@assignment.FinishedDateAndTime?.ToString("g")</td>
+                    <td>@assignment.User?.FirstName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Der er ingen løste opgaver fra i går.</p>
+}
+
