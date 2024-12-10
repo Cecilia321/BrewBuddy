@@ -17,28 +17,69 @@ html {
     min-height: 100%;
 }
 
+
+/*Header i toppen/navbar */
 header {
-    background-color: burlywood;
-    color: white;
-    padding: 5px;
-    height: 68px;
+    background-color: #38281e; /* Mørk kaffebrun */
+    padding: 20px 0;
+    text-align: center;
 }
+
+    header h1 {
+        font-size: 2.5rem;
+        margin: 0;
+        font-weight: bold;
+        text-transform: uppercase;
+        
+    }
+
+
 
 body {
     margin-bottom: 60px;
-    background-image: url("'/images/baggrund 2.jpg'");
     background-size: contain;
-    color: saddlebrown;
+    font-family: 'Arial', sans-serif;
+    background-color: #f5efe6; /* Lys kaffetone */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 
+/*Footeren */
 footer {
-    background-color: burlywood;
-    color: saddlebrown;
+    background-color: #38281e;
+    color: #f5efe6;
+    text-align: center;
+    padding: 15px 0;
+    font-size: 1rem;
+    margin-top: auto;
 }
+    footer ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+    }
+
+        footer ul li a {
+            text-decoration: none;
+            color: white;
+            transition: color 0.3s;
+        }
+
+            footer ul li a:hover {
+                color: #f5efe6;
+            }
+
+
 
 h1 {
-    color: saddlebrown;
+    color: #38281e;
 }
 
 h2 {
@@ -50,19 +91,54 @@ h3 {
 }
 
 a {
-    color: saddlebrown;
+   color: #f5efe6;
     text-decoration: none;
 }
 
 .nav-link {
-    color: burlywood;
+    color: #f5efe6;
 }
 
 button {
-    color: saddlebrown;
-    background-color: burlywood;
+    color: #f5efe6;
+    background-color: #38281e;
+}
+.btn-primary:hover {
+    transform: scale(1.02);
 }
 
 .DetaljeImage {
     width: 40rem;
 }
+
+/* Navigation under header */
+.top-nav {
+    background-color: white; /* Mørk brun */
+    padding: 10px 0;
+    color: white;
+    text-align: center;
+}
+
+    .top-nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+
+        .top-nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 1.1rem;
+            padding: 5px 10px;
+            transition: color 0.3s, background-color 0.3s;
+        }
+
+            .top-nav ul li a:hover {
+                color: white;
+                background-color: #3c2f2f;
+                ; /* Mørk kaffebrun */
+                border-radius: 5px;
+            }

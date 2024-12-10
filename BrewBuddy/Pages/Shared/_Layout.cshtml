@@ -10,29 +10,28 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-saddlebrown bg-white border-bottom box-shadow mb-3">
-            <div class="container">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-page="/Index">BrewBuddy</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="collapse navbar-collapse id=navbarNavDropdown d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-saddlebrown" asp-area="" asp-page="/Index">Home</a>
+                            <a class="nav-link active" aria-current="page" asp-area="" asp-page="/Assignments/Assignments">Opgaver</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-saddlebrown" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-saddlebrown" asp-area="" asp-page="/Machines/CoffieMachines">Coffie Machines</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-saddlebrown" asp-area="" asp-page="/Users">Brugere</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-saddlebrown" asp-area="" asp-page="/Assignments/Assignments">Opgaver</a>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="~/Images/baggrund 2.jpg" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Admin
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-page="/Machines/CoffieMachines">KaffeMaskiner</a></li>
+                                <li><a class="dropdown-item" asp-page="/Users">Brugere</a></li>
+                                <li><a class="dropdown-item" asp-page="/Statistikker/Statistiks">Statistik</a></li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
@@ -51,6 +50,37 @@
 
             </div>
         </nav>
+       @*  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Navbar</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Features</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Pricing</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Dropdown link
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav> *@
     </header>
     <div class="container">
         <main role="main" class="pb-3">

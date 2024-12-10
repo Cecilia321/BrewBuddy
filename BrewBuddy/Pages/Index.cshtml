@@ -1,10 +1,280 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "BrewBuddy - Welcome";
 }
+@*
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <style>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+       
+        /* Global styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: burlywood; /* Kaffebrun baggrund */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh; /* Fuld højde */
+        }
+
+        /* Header styling */
+        header {
+            text-align: center;
+            margin-top: 20px;
+            color: #3c2f2f; /* Mørk brun */
+        }
+
+            header h1 {
+                font-size: 3rem;
+                font-weight: bold;
+            }
+
+        /* Navigation under header */
+        .top-nav {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 1.2rem;
+            color: #6f4e37;
+        }
+
+            .top-nav ul {
+                list-style-type: none;
+                padding: 0;
+            }
+
+                .top-nav ul li {
+                    display: inline-block;
+                    margin: 0 15px;
+                    font-weight: 500;
+                }
+
+                    .top-nav ul li a {
+                        text-decoration: none;
+                        color: #6f4e37;
+                    }
+
+                        .top-nav ul li a:hover {
+                            text-decoration: underline;
+                        }
+
+        /* Login form styling */
+        .login-container {
+            flex-grow: 1; /* Centrerer det vertikalt */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-box {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+            .login-box label {
+                font-weight: bold;
+                margin-top: 10px;
+                display: block;
+            }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .btn-primary {
+            background-color: #6f4e37; /* Mørk kaffebrun */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+            .btn-primary:hover {
+                background-color: #5a3c2e;
+            }
+
+        /* Footer navigation styling */
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #3c2f2f; /* Mørk brun */
+            color: white;
+        }
+
+            footer ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                gap: 20px;
+            }
+
+                footer ul li a {
+                    text-decoration: none;
+                    color: white;
+                    font-size: 1rem;
+                }
+
+                    footer ul li a:hover {
+                        text-decoration: underline;
+                    }
+    </style>
+</head>
+<body>
+    <!-- Header with site name -->
+    <header>
+        <h1>BrewBuddy</h1>
+    </header>
+    
+
+    <!-- Navigation under header -->
+   @*  <div class="top-nav">
+        <ul>
+            <li><a href="/menu">Menu</a></li>
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/support">Support</a></li>
+        </ul>
+    </div> *@
+
+    <!-- Login form in the middle of the page -->
+    @* <div class="login-container">
+        <div class="login-box">
+            <form method="post">
+                <label asp-for="Email">Email</label>
+                <input type="text" asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+
+                <label asp-for="Password">Password</label>
+                <input type="password" asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+
+                <input type="submit" class="btn-primary" value="Login" />
+            </form>
+        </div>
+    </div> *@
+
+    <!-- Footer navigation -->
+    @* <footer>
+        <ul>
+            <li><a href="/home">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </footer> *@
+@* </body>
+</html> *@ 
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <style>
+        /* Global styling */
+        
+
+      
+
+        /* Login form styling */
+        .login-container {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-box {
+            background-color: #ffffff; /* Hvid baggrund */
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
+            width: 350px;
+            text-align: center;
+        }
+
+        .login-box label {
+            font-weight: bold;
+            font-size: 1.1rem;
+            display: block;
+            color: #3c2f2f; /* Mørk brun */
+            margin-bottom: 5px;
+            text-align: left;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0 20px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: #6f4e37;
+            outline: none;
+        }
+
+        .btn-primary {
+            background-color: #38281e;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            cursor: pointer;
+            border-radius: 6px;
+            font-size: 1rem;
+            width: 100%;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+      
+
+
+        
+    </style>
+</head>
+<section>
+    <!-- Header with site name -->
+    <article class="text-center">
+        <h1>BrewBuddy</h1>
+    </article>
+
+    <!-- Login form in the middle of the page -->
+    <div class="login-container">
+        <div class="login-box">
+            <form method="post">
+                <label asp-for="Email">Email</label>
+                <input type="text" asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+
+                <label asp-for="Password">Password</label>
+                <input type="password" asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+
+                <input type="submit" class="btn-primary" value="Login" />
+            </form>
+        </div>
+    </div>
+</section>
+</html>
+
