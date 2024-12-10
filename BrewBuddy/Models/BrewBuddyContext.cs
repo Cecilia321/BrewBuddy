@@ -31,7 +31,7 @@ public partial class BrewBuddyContext : DbContext
     {
         modelBuilder.Entity<Assignment>(entity =>
         {
-            entity.HasKey(e => e.AssignmentId).HasName("PK__Assignme__32499E77A5CE97C8");
+            entity.HasKey(e => e.AssignmentId).HasName("PK__Assignme__32499E778C1D5A54");
 
             entity.ToTable(tb => tb.HasTrigger("UpdateStat"));
 
@@ -45,22 +45,23 @@ public partial class BrewBuddyContext : DbContext
 
             entity.HasOne(d => d.Machine).WithMany(p => p.Assignments)
                 .HasForeignKey(d => d.MachineId)
-                .HasConstraintName("FK__Assignmen__Machi__2E1BDC42");
+                .HasConstraintName("FK__Assignmen__Machi__2F10007B");
 
             entity.HasOne(d => d.User).WithMany(p => p.Assignments)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.SetNull)
-                .HasConstraintName("FK__Assignmen__UserI__2F10007B");
+                .HasConstraintName("FK__Assignmen__UserI__300424B4");
         });
 
         modelBuilder.Entity<CoffieMachine>(entity =>
         {
-            entity.HasKey(e => e.MachineId).HasName("PK__CoffieMa__44EE5B38C90DF6AE");
+            entity.HasKey(e => e.MachineId).HasName("PK__CoffieMa__44EE5B3896CEAD68");
 
             entity.ToTable("CoffieMachine");
 
             entity.Property(e => e.Location).HasMaxLength(50);
             entity.Property(e => e.Name).HasMaxLength(50);
+            entity.Property(e => e.RentDate).HasDefaultValueSql("(getdate())");
         });
 
         modelBuilder.Entity<Statistik>(entity =>
@@ -77,7 +78,7 @@ public partial class BrewBuddyContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CC4CAB51B4B4");
+            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CC4C0F211EBE");
 
             entity.Property(e => e.Email).HasMaxLength(50);
             entity.Property(e => e.FirstName).HasMaxLength(50);

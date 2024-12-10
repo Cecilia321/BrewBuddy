@@ -11,5 +11,7 @@ public partial class CoffieMachine
 
     public string Location { get; set; } = null!;
 
+    public DateOnly? RentDate { get; set; }
+
     public virtual ICollection<Assignment> Assignments { get; set; } = new List<Assignment>();
 }

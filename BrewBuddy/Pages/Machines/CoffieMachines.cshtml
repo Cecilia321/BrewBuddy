@@ -1,56 +1,10 @@
 ﻿@* @page
 @model CoffieMachinesModel
-
-<h1>Kaffemaskiner</h1>
-
-<!-- Vis eksisterende kaffemaskiner -->
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th scope="col">Maskine ID</th>
-            <th scope="col">Navn</th>
-            <th scope="col">Lokation</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var machine in Model.coffieMachines)
-        {
-            <tr>
-                <td>@machine.MachineId</td>
-                <td>@machine.Name</td>
-                <td>@machine.Location</td>
-            </tr>
-        <td>
-            <form method="post" asp-page-handler="Delete">
-                <input type="hidden" name="machineId" value="@machine.MachineId" />
-                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-            </form>
-        </td>
-        }
-    </tbody>
-</table>
-
-<hr />
-
-<h2>Tilføj Ny Kaffemaskine</h2>
-<form method="post">
-    <div>
-        <label for="Name">Navn</label>
-        <input type="text" id="Name" name="NewMachine.Name" required />
-    </div>
-    <div>
-        <label for="Location">Lokation</label>
-        <input type="text" id="Location" name="NewMachine.Location" required />
-    </div>
-    <button type="submit">Tilføj</button>
-</form> *@
-@page
-@model CoffieMachinesModel
 @{
     ViewData["Title"] = "Kaffemaskiner";
 }
 
-<h1>Kaffemaskiner</h1>
+<h1 class="text-center">Kaffemaskiner</h1>
 
 <div>
     @foreach (var machine in Model.coffieMachines)
@@ -59,7 +13,7 @@
             <h3>@machine.Name</h3>
             <button type="button" class="btn-info"><a asp-page="/MachineInfoMappe/MachineInfos" asp-route-id="@machine.MachineId">Info</a></button>
             @* <a asp-page="/MachineInfoMappe/MachineInfos" class="info-btn" onclick="toggleInfo('info-@machine.MachineId')">Info</a> *@
-            <div id="info-@machine.MachineId" class="info-section" style="display: none;"> 
+           @*  <div id="info-@machine.MachineId" class="info-section" style="display: none;"> 
                 
             </div>
         </div>
@@ -78,6 +32,86 @@
             infoSection.style.display = "none";
         }
     }
+</script> *@ 
+
+@page
+@model CoffieMachinesModel
+@{
+    ViewData["Title"] = "Kaffemaskiner";
+}
+
+<h1 class="text-center">Kaffemaskiner</h1>
+
+<div class="container">
+    <div class="row justify-content-center">
+        @foreach (var machine in Model.coffieMachines)
+        {
+            <div class="col-md-5 coffee-machine-box m-3">
+                <h3 class="machine-name text-center "> <ins>@machine.Name </ins></h3>
+                <p class="machine-Location fw-bold h4">Lokation:</p>
+                <p>@machine.Location</p>
+                <p class="machine-Location fw-bold h4">StartTidsunkt for leje af maskine:</p>
+                <p> @machine.RentDate</p> @*Vi laver p fordi der er en paragraf og ikke en overskrift *@
+                <div class="text-center mt-3">
+                    <button type="button" class="btn btn-info">
+                        <a asp-page="/MachineInfoMappe/MachineInfos" asp-route-id="@machine.MachineId" class="text-white text-decoration-none">Info</a>
+                    </button>
+                </div>
+                <div id="info-@machine.MachineId" class="info-section mt-3" style="display: none;">
+                    <!-- Info om maskinen kan tilføjes her -->
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="text-center mt-4">
+    <a asp-page="/Machines/EditCoffieMachines" class="btn btn-secondary">Rediger Kaffemaskiner</a>
+</div>
+
+<script>
+    function toggleInfo(infoId) {
+        var infoSection = document.getElementById(infoId);
+        if (infoSection.style.display === "none") {
+            infoSection.style.display = "block";
+        } else {
+            infoSection.style.display = "none";
+        }
+    }
 </script>
+
+<style>
+    .coffee-machine-box {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+        .coffee-machine-box:hover {
+            box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+        }
+
+    .machine-name {
+        font-weight: bold;
+        color: #333;
+    }
+
+    .btn-info a {
+        color: white;
+        text-decoration: none;
+    }
+
+        .btn-info a:hover {
+            color: white;
+        }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+</style>
+
 
 

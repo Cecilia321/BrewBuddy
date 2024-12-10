@@ -17,7 +17,7 @@
             <th scope="col">Fødseldag</th>
             <th scope="col">Registrerings dato</th>
             <th scope="col">Email</th>
-            @* <th scope="col">Password</th> *@
+            <th scope="col">Handler</th>
         </tr>
     </thead>
     <tbody>
@@ -32,22 +32,60 @@
                 <td>@user.BirthDate</td>
                 <td>@user.RegistrationDate</td>
                 <td>@user.Email</td>
-              
-                @* <td>@user.Password</td> *@
+                <td>
+                    <form method="post" asp-page-handler="Delete">
+                        <input type="hidden" name="userId" value="@user.UserId" />
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+                <td>
+                <!-- Opdater-knap -->
+                <form method="get" asp-page="Edit" asp-route-id="@user.UserId" class="d-inline">
+                    <button type="submit" class="btn btn-primary btn-sm me-2">Opdater</button>
+                </form>
+                </td>
             </tr>
-        <td>
-            <form method="post" asp-page-handler="Delete">
-                <input type="hidden" name="userId" value="@user.UserId" />
-                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-            </form>
-        </td>
+        
         }
     </tbody>
 </table>
 
 <hr />
 
-<h2>Tilføj Ny Bruger</h2>
+<form method="post" class="mx-auto" style="max-width: 600px;">
+    <div class="mb-3">
+        <label for="FirstName" class="form-label">Navn</label>
+        <input type="text" id="FirstName" name="NewUser.FirstName" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label for="LastName" class="form-label">Efternavn</label>
+        <input type="text" id="LastName" name="NewUser.LastName" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label for="PhoneNumber" class="form-label">Telefonnummer</label>
+        <input type="text" id="PhoneNumber" name="NewUser.PhoneNumber" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label for="Role" class="form-label">Rolle</label>
+        <input type="text" id="Role" name="NewUser.Role" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label for="BirthDate" class="form-label">Fødselsdagsdato</label>
+        <input type="date" id="BirthDate" name="NewUser.BirthDate" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label for="Email" class="form-label">Email</label>
+        <input type="email" id="Email" name="NewUser.Email" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label for="Password" class="form-label">Kode</label>
+        <input type="password" id="Password" name="NewUser.Password" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-primary w-100">Tilføj</button>
+</form>
+</div>
+
+@* <h2>Tilføj Ny Bruger</h2>
 <form method="post" style="max-width: 500px; margin-top: 20px;">
     <div style="display: flex; align-items: center; margin-bottom: 10px;">
         <label for="FirstName">Navn</label>
@@ -78,4 +116,4 @@
         <input type="text" id="Password" name="NewUser.Password" required style="flex-grow: 1; padding: 5px;"/>
     </div>
     <button type="submit">Tilføj</button>
-</form>
+</form> *@

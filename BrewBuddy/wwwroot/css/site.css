@@ -37,7 +37,7 @@ header {
 
 body {
     margin-bottom: 60px;
-    background-size: contain;
+    /*background-size: contain;*/
     font-family: 'Arial', sans-serif;
     background-color: #f5efe6; /* Lys kaffetone */
     margin: 0;
@@ -47,13 +47,17 @@ body {
     min-height: 100vh;
 }
 
+main {
+    flex: 1; /* Sørger for at fylde pladsen mellem header og footer */
+}
 
 /*Footeren */
 footer {
     background-color: #38281e;
     color: #f5efe6;
     text-align: center;
-    padding: 15px 0;
+    align-content: center; 
+    min-height: 5rem;
     font-size: 1rem;
     margin-top: auto;
 }
@@ -83,11 +87,11 @@ h1 {
 }
 
 h2 {
-    color: saddlebrown;
+    color: #38281e;
 }
 
 h3 {
-    color: saddlebrown;
+    color: #38281e;
 }
 
 a {
