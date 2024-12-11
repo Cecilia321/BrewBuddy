@@ -1,8 +1,10 @@
 using BrewBuddy.Interface;
-using BrewBuddy.Migrations;
+using BrewBuddy.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.SignalR;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace BrewBuddy.Pages.Assignments
 {
@@ -17,7 +19,7 @@ namespace BrewBuddy.Pages.Assignments
         //public List<Assignment> YesterdaysCompletedAssignments { get; set; }
 
         [BindProperty]
-        public Assignment NewAssignmenten { get; set; }
+        public Assignment NewAssignment { get; set; }
 
         //derefter laver vi en konstruktør med repositori
         public AssignmentEdithModel(IRepository<Assignment> repository)
@@ -29,13 +31,19 @@ namespace BrewBuddy.Pages.Assignments
         public void OnGet()
         {
             // Get all assignments from the repository
-            Assignments = _repository.GetAll();
-            
+            var allAssignments = _repository.GetAll();
+            Assignments = allAssignments
+            .GroupBy(a => a.Type)                // Gruppér efter opgavetype
+            .Select(g => g.First())             // Tag den første opgave i hver gruppe
+            .ToList();
+
         }
+
+
 
         public IActionResult OnPost()
         {
-            Debug.WriteLine($"MachineId received: {NewAssignmenten.MachineId}");
+            Debug.WriteLine($"MachineId received: {NewAssignment.MachineId}");
 
             if (!ModelState.IsValid)
             {
@@ -47,10 +55,17 @@ namespace BrewBuddy.Pages.Assignments
                 Assignments = _repository.GetAll();
                 return Page();
             }
-            NewAssignmenten.UserId = null;
-            NewAssignmenten.FinishedDateAndTime = null;
-            _repository.Add(NewAssignmenten);
+            NewAssignment.UserId = null;
+            NewAssignment.FinishedDateAndTime = null;
+            _repository.Add(NewAssignment);
             return RedirectToPage();
         }
+
+        public IActionResult OnPostDelete(int AssignmentId)
+        {
+            _repository.Delete(AssignmentId);
+            return RedirectToPage();
+        }
+
     }
 }

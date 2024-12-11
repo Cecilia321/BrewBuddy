@@ -9,7 +9,7 @@ public partial class Assignment
 
     public string? Description { get; set; }
 
-    public DateTime? DailyDate { get; set; }
+    public DateOnly? DailyDate { get; set; }
 
     public string? IntervalType { get; set; }
 

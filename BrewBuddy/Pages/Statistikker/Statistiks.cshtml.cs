@@ -2,6 +2,12 @@ using BrewBuddy.Interface;
 using BrewBuddy.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using ScottPlot;
+using System.IO;
+using System.Linq;
+
 
 namespace BrewBuddy.Pages.Statistikker
 {
@@ -27,7 +33,70 @@ namespace BrewBuddy.Pages.Statistikker
         public void OnGet()
         {
             Stat = _repository.GetAll();
+            GenerateGraph();
 
         }
+        private void GenerateGraph()
+        {
+            // Tjek, om der er data
+            if (Stat == null || !Stat.Any())
+                return;
+
+            // Hent datoer og amounts
+            var dates = Stat.Select(s => s.FinishDateAndTime.ToOADate()).ToArray();
+            var amounts = Stat.Select(s => s.Amount).ToArray();
+
+            // Opret ScottPlot-plot
+            var plt = new ScottPlot.Plot(600, 400);
+
+            // Tilføj data til grafen
+            plt.AddScatter(dates, amounts);
+
+            // Formatér x-aksen som dato
+            plt.XAxis.DateTimeFormat(true);
+
+            // Tilføj titler
+            plt.Title("Statistik: Amount over Time");
+            plt.XLabel("Dato");
+            plt.YLabel("Amount");
+
+            // Gem grafen som en PNG-fil
+            var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "statistik.png");
+            Directory.CreateDirectory(Path.GetDirectoryName(imagePath)!);
+            plt.SaveFig(imagePath);
+        }
+
+
+
+
+        //public IActionResult OnGetGraphImage()
+        //{
+        //    // Opret en OxyPlot-model
+        //    var plotModel = new PlotModel { Title = "statistik" };
+
+        //    // Tilføj datasæt
+        //    var barSeries = new ColumnSeries
+        //    {
+        //        ItemsSource = new List<ColumnItem>
+        //        {
+        //            new ColumnItem(5),
+        //            new ColumnItem(10),
+        //            new ColumnItem(15),
+        //            new ColumnItem(20)
+        //        },
+        //        LabelPlacement = LabelPlacement.Outside
+        //    };
+
+        //    plotModel.Series.Add(barSeries);
+
+        //    // Generér billede som byte-array
+        //    var exporter = new OxyPlot.SkiaSharp.PngExporter { Width = 600, Height = 400 };
+        //    var stream = new MemoryStream();
+        //    exporter.Export(plotModel, stream);
+        //    stream.Seek(0, SeekOrigin.Begin);
+
+        //    // Returnér billede
+        //    return File(stream, "image/png");
+        //}
     }
 }

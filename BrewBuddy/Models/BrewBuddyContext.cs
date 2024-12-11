@@ -31,29 +31,29 @@ public partial class BrewBuddyContext : DbContext
     {
         modelBuilder.Entity<Assignment>(entity =>
         {
-            entity.HasKey(e => e.AssignmentId).HasName("PK__Assignme__32499E77ADBB3DB3");
+            entity.HasKey(e => e.AssignmentId).HasName("PK__Assignme__32499E773BB887BF");
+
+            entity.ToTable(tb => tb.HasTrigger("UpdateStat"));
 
             entity.Property(e => e.Amount).HasColumnType("decimal(10, 2)");
-            entity.Property(e => e.DailyDate)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
+            entity.Property(e => e.DailyDate).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.FinishedDateAndTime).HasColumnType("datetime");
             entity.Property(e => e.IntervalType).HasMaxLength(50);
             entity.Property(e => e.Type).HasMaxLength(50);
 
             entity.HasOne(d => d.Machine).WithMany(p => p.Assignments)
                 .HasForeignKey(d => d.MachineId)
-                .HasConstraintName("FK__Assignmen__Machi__398D8EEE");
+                .HasConstraintName("FK__Assignmen__Machi__31EC6D26");
 
             entity.HasOne(d => d.User).WithMany(p => p.Assignments)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.SetNull)
-                .HasConstraintName("FK__Assignmen__UserI__3A81B327");
+                .HasConstraintName("FK__Assignmen__UserI__32E0915F");
         });
 
         modelBuilder.Entity<CoffieMachine>(entity =>
         {
-            entity.HasKey(e => e.MachineId).HasName("PK__CoffieMa__44EE5B3896CEAD68");
+            entity.HasKey(e => e.MachineId).HasName("PK__CoffieMa__44EE5B38EEB7D404");
 
             entity.ToTable("CoffieMachine");
 
@@ -76,7 +76,7 @@ public partial class BrewBuddyContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CC4C0F211EBE");
+            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CC4C34B8315D");
 
             entity.Property(e => e.Email).HasMaxLength(50);
             entity.Property(e => e.FirstName).HasMaxLength(50);

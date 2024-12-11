@@ -1,22 +1,80 @@
 ﻿@page
-@model BrewBuddy.Pages.Assignments.AssignmentEdithModel
+@model AssignmentEdithModel
 @{
+    ViewData["Title"] = "Opgaver";
 }
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Task</th>
+            <th>Amount</th>
+            <th>Date Created</th>
+            <th>User</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var assignment in Model.Assignments)
+        {
+                <tr>
+                    <td>@assignment.Type</td>
+                    <td>@assignment.Amount</td>
+                    <td>@assignment.FinishedDateAndTime?.ToString("g")</td>
+                    <td>@assignment.UserId</td>
+                    <td>
+                    @if (assignment.IsComplete)
+                    {
+                                <span class="text-success">Completed</span>
+                    }
+                    else
+                    {
+                                <span class="text-warning">Incomplete</span>
+                    }
+                    </td>
+                    <td>
+                        <!-- Slet-knap -->
+                        <form method="post" asp-page-handler="Delete" style="display: inline;">
+                            <input type="hidden" name="AssignmentId" value="@assignment.AssignmentId" />
+                            <button type="submit" class="btn btn-danger">Slet</button>
+                        </form>
+
+                        <!-- Rediger-link -->
+                            <a asp-page="./Edit" asp-route-id="@assignment.AssignmentId" class="btn btn-warning">Rediger</a>
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>
 
 
 <h2>Tilføj ny opgave</h2>
 <form method="post" style="max-width: 600px; margin-top: 20px;">
     <div class="mb-3">
         <label for="Type" class="form-label">Opgave Type:</label>
-        <input asp-for="NewAssignmenten.Type" type="text" class="form-control" required />
+        <select asp-for="NewAssignment.Type" type="text" class="form-control" required />
+        <option value="" disabled selected>Vælg type af opgaven</option>
+        <option value="Bønner">Bønner</option>
+        <option value="MælkePulver">MælkePulver</option>
+        <option value="Rengøring">Rengøring</option>
+        <option value="GrundigRengøring">GrundigRengøring</option>
+        <option value="SkiftSlange">SkiftSlange</option>
+        </select>
     </div>
     <div class="mb-3">
         <label for="Description" class="form-label">Beskrivelse:</label>
-        <input asp-for="NewAssignmenten.Description" type="text" class="form-control" required />
+        <input asp-for="NewAssignment.Description" type="text" class="form-control" required />
     </div>
     <div class="mb-3">
         <label for="IntervalType" class="form-label">Interval Type:</label>
-        <input asp-for="NewAssignment.IntervalType" type="text" class="form-control" required />
+        <select asp-for="NewAssignment.IntervalType" type="text" class="form-control" required />
+        <option value="" disabled selected>Vælg interval for denne opgave</option>
+        <option value="Daily">Daily</option>
+        <option value="Weekly">Weekly</option>
+        <option value="Monthly">Monthly</option>
+        </select>
+
     </div>
     <div class="mb-3">
         <label for="MachineId" class="form-label">Maskine ID:</label>

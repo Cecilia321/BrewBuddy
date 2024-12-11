@@ -4,11 +4,13 @@
     ViewData["Title"] = "Opgaver";
 }
 
-<h1>Opgaver grupperet efter maskine</h1>
+<h1>Dagens Opgaver</h1>
+
+<hr class="my-5" />
 
 @foreach (var machineGroup in Model.IncompleteAssignments.GroupBy(a => a.MachineId))
 {
-    <h2>Maskine ID: @machineGroup.Key</h2>
+    <p class="h4"><ins>Maskine: @machineGroup.Key</ins></p>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -16,8 +18,10 @@
                 <th>Date</th>
                 <th>Interval</th>
                 <th>Description</th>
-                <th>User</th>
-                <th>Actions</th>
+                <th></th>
+                <th>Amount</th>
+                <th></th>
+
             </tr>
         </thead>
         <tbody>
@@ -27,7 +31,12 @@
                     <td>@assignment.Type</td>
                     <td>@assignment.DailyDate</td>
                     <td>@assignment.IntervalType</td>
-                    <td>@assignment.Description</td>
+                    <td>
+                        <details>
+                            <summary>Se beskrivelse</summary>
+                            <p>@assignment.Description</p>
+                        </details>
+                    </td>
                     <td>@assignment.User?.FirstName</td>
                     <td>
                         @if (!assignment.IsComplete)
@@ -50,7 +59,12 @@
     </table>
 }
 
+<hr class="transparent-hr my-5">
 <h2>Dagens løste opgaver</h2>
+<hr class="my-5" />
+@foreach (var machineGroup in Model.TodaysCompletedAssignments.GroupBy(a => a.MachineId))
+{
+<p class="h4"><ins>Maskine: @machineGroup.Key</ins></p>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -61,7 +75,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var assignment in Model.TodaysCompletedAssignments)
+        @foreach (var assignment in machineGroup)
         {
             <tr>
                 <td>@assignment.Type</td>
@@ -72,7 +86,7 @@
         }
     </tbody>
 </table>
-
+}
 <h2>Gårdagens løste opgaver</h2>
 <table class="table table-striped">
     <thead>
@@ -114,3 +128,10 @@
     </div>
     <button type="submit" class="btn btn-success">Tilføj</button>
 </form> *@
+
+<style>
+    .transparent-hr {
+        border: none; /* Fjern standard kant */
+        border-top: 1px solid rgba(0, 0, 0, 0.2); /* Juster farve og gennemsigtighed */
+    }
+</style>
