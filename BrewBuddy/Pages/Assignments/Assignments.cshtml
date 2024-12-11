@@ -6,116 +6,111 @@
 
 <h1>Opgaver grupperet efter maskine</h1>
 
-<!-- Vis ufuldstændige opgaver, hvis de findes -->
-@if (Model.IncompleteAssignments != null && Model.IncompleteAssignments.Any())
+@foreach (var machineGroup in Model.IncompleteAssignments.GroupBy(a => a.MachineId))
 {
-    @foreach (var dateGroup in Model.IncompleteAssignments.GroupBy(a => a.DailyDate))
-    {
-        <h2>Dato: @dateGroup.Key?.ToString("dd-MM-yyyy")</h2> <!-- DailyDate vises én gang pr. dato -->
-        @foreach (var machineGroup in dateGroup.GroupBy(a => a.MachineId))
-        {
-            <h3>Maskine ID: @machineGroup.Key</h3>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Task</th>
-                        <th>Interval</th>
-                        <th>Description</th>
-                        <th>User</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var assignment in machineGroup)
-                    {
-                        <tr>
-                            <td>@assignment.Type</td>
-                            <td>@assignment.IntervalType</td>
-                            <td>@assignment.Description</td>
-                            <td>@assignment.User?.FirstName</td>
-                            <td>
-                                <!-- Form til at markere opgaven som fuldført -->
-                                @if (!assignment.IsComplete)
-                                {
-                                    <form method="post" asp-page-handler="Complete">
-                                        <input type="hidden" name="AssignmentId" value="@assignment.AssignmentId" />
-                                        <label for="Amount-@assignment.AssignmentId">Amount:</label>
-                                        <input type="number" id="Amount-@assignment.AssignmentId" name="Amount" value="@assignment.Amount" />
-                                        <button type="submit" class="btn btn-primary">Mark Complete</button>
-                                    </form>
-                                }
-                                else
-                                {
-                                    <span class="text-success">Completed</span>
-                                }
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        }
-    }
-}
-else
-{
-    <p>Der er endnu ikke oprettet nogen ufuldstændige opgaver.</p>
+    <h2>Maskine ID: @machineGroup.Key</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Task</th>
+                <th>Date</th>
+                <th>Interval</th>
+                <th>Description</th>
+                <th>User</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var assignment in machineGroup)
+            {
+                <tr>
+                    <td>@assignment.Type</td>
+                    <td>@assignment.DailyDate</td>
+                    <td>@assignment.IntervalType</td>
+                    <td>@assignment.Description</td>
+                    <td>@assignment.User?.FirstName</td>
+                    <td>
+                        @if (!assignment.IsComplete)
+                        {
+                            <form method="post" asp-page-handler="Complete" style="display: inline;">
+                                <input type="hidden" name="AssignmentId" value="@assignment.AssignmentId" />
+                                <label for="Amount-@assignment.AssignmentId">Amount:</label>
+                                <input type="number" id="Amount-@assignment.AssignmentId" name="Amount" value="@assignment.Amount" />
+                                <button type="submit" class="btn btn-primary">Mark Complete</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <span class="text-success">Completed</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
 
 <h2>Dagens løste opgaver</h2>
-@if (Model.TodaysCompletedAssignments != null && Model.TodaysCompletedAssignments.Any())
-{
-    <table class="table table-striped">
-        <thead>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Task</th>
+            <th>Amount</th>
+            <th>Date Completed</th>
+            <th>User</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var assignment in Model.TodaysCompletedAssignments)
+        {
             <tr>
-                <th>Task</th>
-                <th>Amount</th>
-                <th>Date Completed</th>
-                <th>User</th>
+                <td>@assignment.Type</td>
+                <td>@assignment.Amount</td>
+                <td>@assignment.FinishedDateAndTime?.ToString("g")</td>
+                <td>@assignment.UserId</td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var assignment in Model.TodaysCompletedAssignments)
-            {
-                <tr>
-                    <td>@assignment.Type</td>
-                    <td>@assignment.Amount</td>
-                    <td>@assignment.FinishedDateAndTime?.ToString("g")</td>
-                    <td>@assignment.UserId</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-else
-{
-    <p>Der er ingen løste opgaver i dag.</p>
-}
+        }
+    </tbody>
+</table>
 
 <h2>Gårdagens løste opgaver</h2>
-@if (Model.YesterdaysCompletedAssignments != null && Model.YesterdaysCompletedAssignments.Any())
-{
-    <table class="table table-striped">
-        <thead>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Task</th>
+            <th>Date Completed</th>
+            <th>User</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var assignment in Model.YesterdaysCompletedAssignments)
+        {
             <tr>
-                <th>Task</th>
-                <th>Date Completed</th>
-                <th>User</th>
+                <td>@assignment.Type</td>
+                <td>@assignment.FinishedDateAndTime?.ToString("g")</td>
+                <td>@assignment.User?.FirstName</td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var assignment in Model.YesterdaysCompletedAssignments)
-            {
-                <tr>
-                    <td>@assignment.Type</td>
-                    <td>@assignment.FinishedDateAndTime?.ToString("g")</td>
-                    <td>@assignment.User?.FirstName</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-else
-{
-    <p>Der er ingen løste opgaver fra i går.</p>
-}
+        }
+    </tbody>
+</table>
 
+@* <h2>Tilføj ny opgave</h2>
+<form method="post" style="max-width: 600px; margin-top: 20px;">
+    <div class="mb-3">
+        <label for="Type" class="form-label">Opgave Type:</label>
+        <input asp-for="NewAssignment.Type" type="text" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label for="Description" class="form-label">Beskrivelse:</label>
+        <input asp-for="NewAssignment.Description" type="text" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label for="IntervalType" class="form-label">Interval Type:</label>
+        <input asp-for="NewAssignment.IntervalType" type="text" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label for="MachineId" class="form-label">Maskine ID:</label>
+        <input asp-for="NewAssignment.MachineId" type="number" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-success">Tilføj</button>
+</form> *@

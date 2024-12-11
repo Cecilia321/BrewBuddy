@@ -8,6 +8,10 @@ namespace BrewBuddy.Migrations
     /// <inheritdoc />
     public partial class Assignment : Migration
     {
+        public object MachineId { get; internal set; }
+        public object UserId { get; internal set; }
+        public object FinishedDateAndTime { get; internal set; }
+
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {

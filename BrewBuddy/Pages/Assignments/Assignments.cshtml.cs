@@ -37,25 +37,25 @@ namespace BrewBuddy.Pages.Assignments
             PopulateAssignmentLists(allAssignments);
         }
 
-        public IActionResult OnPost()
-        {
-            Debug.WriteLine($"MachineId received: {NewAssignment.MachineId}");
+        //public IActionResult OnPost()
+        //{
+        //    Debug.WriteLine($"MachineId received: {NewAssignment.MachineId}");
 
-            if (!ModelState.IsValid)
-            {
-                Debug.WriteLine("ModelState is invalid");
-                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
-                {
-                    Debug.WriteLine($"Error: {error.ErrorMessage}");
-                }
-                Assignments = _repository.GetAll();
-                return Page();
-            }
-            NewAssignment.UserId = null;
-            NewAssignment.FinishedDateAndTime = null;
-            _repository.Add(NewAssignment);
-            return RedirectToPage();
-        }
+        //    if (!ModelState.IsValid)
+        //    {
+        //        Debug.WriteLine("ModelState is invalid");
+        //        foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+        //        {
+        //            Debug.WriteLine($"Error: {error.ErrorMessage}");
+        //        }
+        //        Assignments = _repository.GetAll();
+        //        return Page();
+        //    }
+        //    NewAssignment.UserId = null;
+        //    NewAssignment.FinishedDateAndTime = null;
+        //    _repository.Add(NewAssignment);
+        //    return RedirectToPage();
+        //}
 
         //public IActionResult OnPostComplete(int AssignmentId)
         //{
@@ -79,54 +79,54 @@ namespace BrewBuddy.Pages.Assignments
 
 
 
-        //public IActionResult OnPostComplete(int AssignmentId, decimal? Amount)
-        //{
-        //    // Check if Amount is valid
-        //    if (Amount < 0)
-        //    {
-        //        ModelState.AddModelError("Amount", "Beløbet skal være større end 0.");
-        //        IncompleteAssignments = GetIncompleteAssignments(_repository.GetAll()); // Refresh assignments list
-        //        return Page(); // Return to the page with the error message
-        //    }
-        //    // Hent opgaven fra databasen
-        //    var assignment = _repository.GetAllById(AssignmentId);
-        //    if (assignment == null)
-        //    {
-        //        ModelState.AddModelError("", "Opgaven findes ikke.");
-        //        IncompleteAssignments = GetIncompleteAssignments(_repository.GetAll());
-        //        return Page();
-        //    }
+            public IActionResult OnPostComplete(int AssignmentId, decimal? Amount)
+            {
+                // Check if Amount is valid
+                if (Amount < 0)
+                {
+                    ModelState.AddModelError("Amount", "Beløbet skal være større end 0.");
+                    IncompleteAssignments = GetIncompleteAssignments(_repository.GetAll()); // Refresh assignments list
+                    return Page(); // Return to the page with the error message
+                }
+                // Hent opgaven fra databasen
+                var assignment = _repository.GetAllById(AssignmentId);
+                if (assignment == null)
+                {
+                    ModelState.AddModelError("", "Opgaven findes ikke.");
+                    IncompleteAssignments = GetIncompleteAssignments(_repository.GetAll());
+                    return Page();
+                }
 
-        //    // Hent UserId fra claims
-        //    var userIdString = User.FindFirstValue(ClaimTypes.Name);
-        //    if (string.IsNullOrEmpty(userIdString) || !int.TryParse(userIdString, out int userId))
-        //    {
-        //        ModelState.AddModelError("","Du skal være logget ind for at fuldføre en opgave.");
-        //        IncompleteAssignments = GetIncompleteAssignments(_repository.GetAll());
-        //        return Page();
-        //    }
+                // Hent UserId fra claims
+                var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (string.IsNullOrEmpty(userIdString) || !int.TryParse(userIdString, out int userId))
+                {
+                    ModelState.AddModelError("", "Du skal være logget ind for at fuldføre en opgave.");
+                    IncompleteAssignments = GetIncompleteAssignments(_repository.GetAll());
+                    return Page();
+                }
 
-            
 
-            // Marker opgaven som fuldført og tildel UserId
-        //    assignment.IsComplete = true;
-        //    assignment.FinishedDateAndTime = DateTime.Now;
-        //    assignment.UserId = userId;
-        //    assignment.Amount = Amount;
-          
 
-        //    // Opdater opgaven i databasen
-        //    _repository.Update(assignment);
+                //Marker opgaven som fuldført og tildel UserId
+                assignment.IsComplete = true;
+                assignment.FinishedDateAndTime = DateTime.Now;
+                assignment.UserId = userId;
+                assignment.Amount = Amount;
 
-        //    // Opdater listen over opgaver
-        //    PopulateAssignmentLists(_repository.GetAll());
 
-        //    return Page();
-        //}
+                // Opdater opgaven i databasen
+                _repository.Update(assignment);
 
-  
-        // Metode til at opdatere listerne
-        private void PopulateAssignmentLists(IEnumerable<Assignment> allAssignments)
+                // Opdater listen over opgaver
+                PopulateAssignmentLists(_repository.GetAll());
+
+                return Page();
+            }
+
+
+            // Metode til at opdatere listerne
+            private void PopulateAssignmentLists(IEnumerable<Assignment> allAssignments)
         {
             IncompleteAssignments = GetIncompleteAssignments(allAssignments);
             TodaysCompletedAssignments = GetTodaysCompletedAssignments(allAssignments);
