@@ -82,3 +82,145 @@
     </div>
     <button type="submit" class="btn btn-success">Tilføj</button>
 </form>
+<head>
+    <meta charset="UTF-8">
+    <title>Spider Diagram</title>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <style>
+        svg {
+            font: 10px sans-serif;
+        }
+
+        .link {
+            stroke: #999;
+            stroke-opacity: 0.6;
+        }
+
+        .node circle {
+            fill: #fff;
+            stroke: steelblue;
+            stroke-width: 1.5px;
+        }
+
+        .node text {
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div id="graph"></div>
+    <script>
+        var data= {
+            "nodes":[
+                {"st":0,"label":"Myriel"},
+                {"id":1,"label":"Napoleon"},
+                {"id":2,"label":"MlleBaptistine"},
+                {"id":3,"label":"MmeMagloire"},
+                {"id":4,"label":"CountessDeLo"},
+                {"id":5,"label":"Geborand"},
+                {"id":6,"label":"Champtercier"},
+                {"id":7,"label":"Cravatte"},
+                {"id":8,"label":"Count"},
+                {"id":9,"label":"OldMan"},
+                {"id":10,"label":"Labarre"}
+                ],
+            "links":[
+                {"source":1,"target":0,"value":1},
+                {"source":2,"target":0,"value":8},
+                {"source":3,"target":0,"value":10},
+                {"source":3,"target":2,"value":6},
+                {"source":4,"target":0,"value":1},
+                {"source":5,"target":0,"value":1},
+                {"source":6,"target":0,"value":1},
+                {"source":7,"target":0,"value":1},
+                {"source":8,"target":0,"value":2},
+                {"source":9,"target":0,"value":1}
+                ]
+            }
+
+
+        var width = 960,
+            height = 500,
+            radius = 6;
+
+        var force = d3.layout.force()
+            .gravity(.05)
+            .charge(-120)
+            .linkDistance(80)
+            .size([width, height]);
+
+        var svg = d3.select("#graph").append("svg")
+            .attr("width", width)
+            .attr("height", height);
+            var color = d3.scale.category20();
+
+            force
+                .nodes(data.nodes)
+                .links(data.links)
+                .start();
+
+            var link = svg.selectAll(".link")
+                .data(data.links);
+
+            var node = svg.selectAll(".node")
+                .data(data.nodes);
+
+            node.exit().remove();
+            link.exit().remove();
+
+            link.enter().append("line")
+                .attr("class", "link")
+                .style("stroke-width", function (d) {
+                    if ("value" in d) {
+                        return Math.sqrt(d.value);
+                    } else {
+                        return 1;
+                    }
+                });
+
+            var groups = node.enter()
+                .append("g")
+                .attr("class", "node");
+
+            groups.append("circle").attr("r", function (d) {
+                if ("id" in d) { return 5; }
+                else { return 0; }
+            })
+                .style("fill", function (d) { return color(d.value); })
+                .call(force.drag);
+
+            groups.append("text")
+                .attr("dx", 12)
+                .attr("dy", ".35em")
+                .text("hi");
+
+            node.selectAll("text")
+                .text(function (d) {
+                    if ("label" in d) {
+                        return d.label;
+                    } else {
+                        return d.id;
+                    }
+                }
+                );
+
+            force.on("tick", function () {
+                link.attr("x1", function (d) {
+                    return d.source.x;
+                })
+                    .attr("y1", function (d) {
+                        return d.source.y;
+                    })
+                    .attr("x2", function (d) {
+                        return d.target.x;
+                    })
+                    .attr("y2", function (d) {
+                        return d.target.y;
+                    });
+
+                node.attr("cx", function (d) { return d.x = Math.max(radius, Math.min(width - radius, d.x)); })
+                    .attr("cy", function (d) { return d.y = Math.max(radius, Math.min(height - radius, d.y)); });
+                node.attr("transform", function (d) { return "translate(" + d.x + "," + d.y + ")"; });
+            });
+    </script>
+</body>

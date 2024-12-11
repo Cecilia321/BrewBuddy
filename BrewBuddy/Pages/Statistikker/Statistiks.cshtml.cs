@@ -33,38 +33,30 @@ namespace BrewBuddy.Pages.Statistikker
         public void OnGet()
         {
             Stat = _repository.GetAll();
-            GenerateGraph();
+            
 
         }
-        private void GenerateGraph()
-        {
-            // Tjek, om der er data
-            if (Stat == null || !Stat.Any())
-                return;
 
-            // Hent datoer og amounts
-            var dates = Stat.Select(s => s.FinishDateAndTime.ToOADate()).ToArray();
-            var amounts = Stat.Select(s => s.Amount).ToArray();
 
-            // Opret ScottPlot-plot
-            var plt = new ScottPlot.Plot(600, 400);
+//        private void GenerateGraph()
+//{
+//    // Skab en ny plotteskabelon
+//    var plt = new ScottPlot.Plot();
 
-            // Tilføj data til grafen
-            plt.AddScatter(dates, amounts);
+//    // Tilføj data (her bruger vi eksempeldata)
+//    double[] data = { 1, 2, 3, 4, 5 };
+//    plt.AddBar(data);
 
-            // Formatér x-aksen som dato
-            plt.XAxis.DateTimeFormat(true);
+//    // Tilføj labels
+//    plt.Title("Statistik");
+//    plt.XAxis.Label("X-Akse");
+//    plt.YAxis.Label("Y-Akse");
 
-            // Tilføj titler
-            plt.Title("Statistik: Amount over Time");
-            plt.XLabel("Dato");
-            plt.YLabel("Amount");
-
-            // Gem grafen som en PNG-fil
-            var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "statistik.png");
-            Directory.CreateDirectory(Path.GetDirectoryName(imagePath)!);
-            plt.SaveFig(imagePath);
-        }
+//    // Gem grafen som et billede
+//    var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "statistik.png");
+//    Directory.CreateDirectory(Path.GetDirectoryName(imagePath)!);
+//    plt.SaveFig(imagePath);
+//}
 
 
 
