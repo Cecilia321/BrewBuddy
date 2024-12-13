@@ -4,14 +4,14 @@
 @{
 }
 <h1>statistik</h1>
-@foreach (var machineGroup in Model.Stat.GroupBy(a => a.MachineId))
+
+@foreach (var group in Model.Stat.GroupBy(s => s.MachineId))
 {
-    <h2>Maskine Id: @machineGroup.Key</h2>
+    <h2>Maskine Id: @group.Key</h2> <!-- Vis maskineid for hver gruppe -->
 
     <table>
         <thead>
             <tr>
-                <th>Maskine Id</th>
                 <th>Dato</th>
                 <th>Type</th>
                 <th>Amount</th>
@@ -19,20 +19,27 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var stat in machineGroup)
+            @foreach (var s in group)
             {
                 <tr>
-                    <td>@stat.MachineId</td>
-                    <td>@stat.FinishDateAndTime</td>
-                    <td>@stat.Type</td>
-                    <td>@stat.Amount</td>
-                    <td>@stat.MonthlyAmount</td>
+                    <td>@s.FinishDateAndTime</td>
+                    <td>@s.Type</td>
+                    <td>@s.Amount</td>
+                    <td>@s.MonthlyAmount</td>
                 </tr>
             }
         </tbody>
     </table>
-    <br />
+    @* <form method="post">
+
+        <div>
+            @Html.Raw(Model.ChartJson)
+        </div>
+        @* <div>@Html.Raw(Model.ChartJson)</div> *@
+        @*<br />
+    </form> *@
 }
+
 
 
 <h1>
@@ -52,6 +59,6 @@
         @* <div>@Html.Raw(Model.ChartJson)</div> *@
       <br />
     </form>
-</section>
+</section> 
  
 

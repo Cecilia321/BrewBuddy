@@ -32,6 +32,7 @@ namespace BrewBuddy.Pages.Statistikker
         }
 
 
+
         public void OnGet()
         {
                 // Hent alle statistikker fra databasen

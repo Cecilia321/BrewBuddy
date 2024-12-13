@@ -3,8 +3,10 @@ using BrewBuddy.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
-namespace BrewBuddy.Pages
+namespace BrewBuddy.Pages.UserFolder
 {
     //[Authorize(Policy = "AdminOnly")]
     public class UsersModel : PageModel
@@ -13,7 +15,7 @@ namespace BrewBuddy.Pages
 
         public List<User> users { get; set; } //denne her laver vi for at holde maskinerne i en liste 
 
-        
+
         [BindProperty]
         public User NewUser { get; set; } //og den her laver vi for at kunne oprette en ny maskine 
 
@@ -39,10 +41,26 @@ namespace BrewBuddy.Pages
                 users = _repository.GetAll();
                 return Page();
             }
-
-            NewUser.Password = BCrypt.Net.BCrypt.HashPassword(NewUser.Password, salt);
-            _repository.Add(NewUser);
-            return RedirectToPage();
+            try
+            {
+                NewUser.Password = BCrypt.Net.BCrypt.HashPassword(NewUser.Password, salt);
+                _repository.Add(NewUser);
+                return RedirectToPage();
+            }
+            catch (UserValidationExeption ex)
+            {
+                throw;
+            }
+            catch (DbUpdateException ex)
+            {
+                Debug.WriteLine($"DbUpdateException: {ex.InnerException?.Message}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                users = _repository.GetAll();
+                return Page();
+            }
         }
 
         public IActionResult OnPostDelete(int UserId)
@@ -50,5 +68,7 @@ namespace BrewBuddy.Pages
             _repository.Delete(UserId);
             return RedirectToPage();
         }
+
+
     }
 }

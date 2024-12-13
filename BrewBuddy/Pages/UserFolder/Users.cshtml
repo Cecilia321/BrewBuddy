@@ -1,0 +1,124 @@
+﻿@page
+@model UsersModel
+@{
+}
+
+<h1>Brugere</h1>
+
+<!-- Vis eksisterende users -->
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">User Id</th>
+            <th scope="col">Navn</th>
+            <th scope="col">EfterNavn</th>
+            <th scope="col">tlf</th>
+            <th scope="col">Rolle</th>
+            <th scope="col">Fødseldag</th>
+            <th scope="col">Registrerings dato</th>
+            <th scope="col">Email</th>
+            <th scope="col">Handler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.users)
+        {
+            <tr>
+                <td>@user.UserId</td>
+                <td>@user.FirstName</td>
+                <td>@user.LastName</td>
+                <td>@user.PhoneNumber</td>
+                <td>@user.Role</td>
+                <td>@user.BirthDate</td>
+                <td>@user.RegistrationDate</td>
+                <td>@user.Email</td>
+                <td>
+                    <form method="post" asp-page-handler="Delete">
+                        <input type="hidden" name="userId" value="@user.UserId" />
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+                <td>
+                <!-- Opdater-knap -->
+                <form method="get" asp-page="/UserFolder/UpdateUser" asp-route-id="@user.UserId" class="d-inline">
+                    <button type="submit" class="btn btn-primary btn-sm me-2">Opdater</button>
+                </form>
+                </td>
+            </tr>
+        
+        }
+    </tbody>
+</table>
+
+
+
+<!-- Tilføj ny bruger -->
+ <hr class="my-5" /> 
+ <h2 class="mb-4 text-center"><strong>Opret medarbejder</strong></h2>
+
+ <form method="post" class="mx-auto" style="max-width: 600px;">
+     <!--Fornavn-->
+     <div class="mb-3">
+         <label for="FirstName" class="form-label">Fornavn</label>
+         <input type="text" id="FirstName" name="NewUser.FirstName" class="form-control" 
+         minlength="1" maxlength="50 "required placeholder="Indtast fornavn"/>
+         <small class="form-text text-muted">Fornavnet skal være mellem 1 og 50 tegn.</small>
+     </div>
+      <!--Efternavn-->
+     <div class="mb-3">
+         <label for="LastName" class="form-label">Efternavn</label>
+         <input type="text" id="LastName" name="NewUser.LastName" class="form-control"
+                 minlength="2" maxlength="50" required
+                 placeholder="Indtast efternavn" />
+             <small class="form-text text-muted">Efternavnet skal være mellem 2 og 50 tegn.</small>
+     </div>
+      <!--Mobilnummer-->
+     <div class="mb-3">
+         <label for="PhoneNumber" class="form-label">Telefonnummer</label>
+         <div class="input-group">
+             <span class="input-group-text">+45</span>
+             <input type="text" id="PhoneNumber" name="NewUser.PhoneNumber" class="form-control"
+                    placeholder="12345678" required />
+         </div>
+
+      <!--Rolle-->
+     <div class="mb-3">
+         <label for="Role" class="form-label">Stilling</label>
+         <select id="Role" name="NewUser.Role" class="form-control" required>
+             <option value="">Vælg en stilling</option>
+             <option value="Admin">Admin</option>
+             <option value="User">Medarbejder</option>
+         </select>
+         <small class="form-text text-muted">Vælg enten 'Admin' eller 'Medarbejder'.</small>
+     </div>
+    <!--Fødselsdato-->
+
+    <div class="mb-3">
+        <label for="BirthDate" class="form-label">Fødselsdagsdato</label>
+        <input type="date" id="BirthDate" name="NewUser.BirthDate" class="form-control"
+               required max="@DateTime.Now.ToString("yyyy-MM-dd")" />
+
+        <small class="form-text text-muted">Fødselsdatoen skal være før dags dato.</small>
+    </div>
+
+    <!-- Email -->
+    <div class="mb-3">
+        <label for="Email" class="form-label">Email</label>
+        <input type="email" id="Email" name="NewUser.Email" class="form-control" required
+               placeholder="Indtast email" />
+        <small class="form-text text-muted">Indtast en gyldig emailadresse.</small>
+    </div>
+
+    <!-- Adgangskode -->
+   @*  <div class="mb-3">
+        <label for="Password" class="form-label">Kode</label>
+        <input type="password" id="Password" name="NewUser.Password" class="form-control"
+               minlength="8" required
+               placeholder="Indtast adgangskode" />
+        <small class="form-text text-muted">Adgangskoden skal være mindst 8 tegn lang.</small>
+    </div> *@
+
+    <button type="submit" class="btn btn-primary w-100">Tilføj</button>
+</form>
+
+

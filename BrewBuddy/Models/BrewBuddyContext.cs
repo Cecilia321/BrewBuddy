@@ -29,9 +29,20 @@ public partial class BrewBuddyContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Assignment>(entity =>
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<User>(builder =>
         {
-            entity.HasKey(e => e.AssignmentId).HasName("PK__Assignme__32499E773BB887BF");
+            builder.Property(u => u.RegistrationDate)
+       .HasColumnType("datetime")
+       .ValueGeneratedOnAdd()
+       .Metadata.SetAfterSaveBehavior(Microsoft.EntityFrameworkCore.Metadata.PropertySaveBehavior.Ignore);
+
+        });
+
+            modelBuilder.Entity<Assignment>(entity =>
+        {
+            entity.HasKey(e => e.AssignmentId).HasName("PK__Assignme__32499E772076DDEC");
 
             entity.ToTable(tb => tb.HasTrigger("UpdateStat"));
 
@@ -51,46 +62,47 @@ public partial class BrewBuddyContext : DbContext
                 .HasConstraintName("FK__Assignmen__UserI__32E0915F");
         });
 
-        modelBuilder.Entity<CoffieMachine>(entity =>
-        {
-            entity.HasKey(e => e.MachineId).HasName("PK__CoffieMa__44EE5B38EEB7D404");
+            modelBuilder.Entity<CoffieMachine>(entity =>
+            {
+                entity.HasKey(e => e.MachineId).HasName("PK__CoffieMa__44EE5B380CB5E01F");
 
-            entity.ToTable("CoffieMachine");
+                entity.ToTable("CoffieMachine");
 
-            entity.Property(e => e.Location).HasMaxLength(50);
-            entity.Property(e => e.Name).HasMaxLength(50);
-            entity.Property(e => e.RentDate).HasDefaultValueSql("(getdate())");
-        });
+                entity.Property(e => e.Location).HasMaxLength(50);
+                entity.Property(e => e.Name).HasMaxLength(50);
+                entity.Property(e => e.RentDate).HasDefaultValueSql("(getdate())");
+            });
 
-        modelBuilder.Entity<Statistik>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToTable("Statistik");
+            modelBuilder.Entity<Statistik>(entity =>
+            {
+                entity
+                    .HasNoKey()
+                    .ToTable("Statistik");
 
-            entity.Property(e => e.Amount).HasColumnType("decimal(10, 2)");
-            entity.Property(e => e.MonthlyAmount).HasColumnType("decimal(10, 2)");
-            entity.Property(e => e.StatId).ValueGeneratedOnAdd();
-            entity.Property(e => e.Type).HasMaxLength(50);
-        });
+                entity.Property(e => e.Amount).HasColumnType("decimal(10, 2)");
+                entity.Property(e => e.MonthlyAmount).HasColumnType("decimal(10, 2)");
+                entity.Property(e => e.StatId).ValueGeneratedOnAdd();
+                entity.Property(e => e.Type).HasMaxLength(50);
+            });
 
-        modelBuilder.Entity<User>(entity =>
-        {
-            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CC4C34B8315D");
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasKey(e => e.UserId).HasName("PK__Users__1788CC4C2D91324D");
 
-            entity.Property(e => e.Email).HasMaxLength(50);
-            entity.Property(e => e.FirstName).HasMaxLength(50);
-            entity.Property(e => e.LastName).HasMaxLength(50);
-            entity.Property(e => e.Password).HasMaxLength(255);
-            entity.Property(e => e.PhoneNumber).HasMaxLength(50);
-            entity.Property(e => e.RegistrationDate)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
-            entity.Property(e => e.Role).HasMaxLength(10);
-        });
+                entity.Property(e => e.BirthDate).HasColumnType("datetime");
+                entity.Property(e => e.Email).HasMaxLength(50);
+                entity.Property(e => e.FirstName).HasMaxLength(50);
+                entity.Property(e => e.LastName).HasMaxLength(50);
+                entity.Property(e => e.Password).HasMaxLength(255);
+                entity.Property(e => e.PhoneNumber).HasMaxLength(50);
+                entity.Property(e => e.RegistrationDate)
+                    .HasDefaultValueSql("(getdate())")
+                    .HasColumnType("datetime");
+                entity.Property(e => e.Role).HasMaxLength(10);
+            });
 
-        OnModelCreatingPartial(modelBuilder);
-    }
+            OnModelCreatingPartial(modelBuilder);
+        }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }
