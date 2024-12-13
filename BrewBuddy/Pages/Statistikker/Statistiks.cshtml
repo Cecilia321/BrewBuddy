@@ -1,33 +1,57 @@
 ﻿@page
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model BrewBuddy.Pages.Statistikker.StatistiksModel
 @{
 }
 <h1>statistik</h1>
+@foreach (var machineGroup in Model.Stat.GroupBy(a => a.MachineId))
+{
+    <h2>Maskine Id: @machineGroup.Key</h2>
 
-<table>
-    <thead>
-        <tr>
-            <th>Maskine Id</th>
-            <th>Dato</th>
-            <th>Type</th>
-            <th>Amount</th>
-            <th>MonthlyAmount</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var s in Model.Stat)
-        {
+    <table>
+        <thead>
             <tr>
-                <td>@s.MachineId</td>
-                <td>@s.FinishDateAndTime</td>
-                <td>@s.Type</td>
-                <td>@s.Amount</td>
-                <td>@s.MonthlyAmount</td>   
+                <th>Maskine Id</th>
+                <th>Dato</th>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>MonthlyAmount</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var stat in machineGroup)
+            {
+                <tr>
+                    <td>@stat.MachineId</td>
+                    <td>@stat.FinishDateAndTime</td>
+                    <td>@stat.Type</td>
+                    <td>@stat.Amount</td>
+                    <td>@stat.MonthlyAmount</td>
                 </tr>
-        }
+            }
+        </tbody>
+    </table>
+    <br />
+}
 
-    </tbody>
-</table>
 
+<h1>
+    <meta name="viewport" content="width=device-width" />
+    <script src="//cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
 
+    <script src="//cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
+    <title>ColumnChart</title>
+</h1>
+
+<section>
+    <form method="post">
+
+        <div>
+            @Html.Raw(Model.ChartJson)
+        </div>
+        @* <div>@Html.Raw(Model.ChartJson)</div> *@
+      <br />
+    </form>
+</section>
+ 
 

@@ -11,8 +11,10 @@ namespace BrewBuddy
         {
             var builder = WebApplication.CreateBuilder(args);
 
+
             // Add services to the container.
             builder.Services.AddRazorPages();
+
 
             //dependenciinjektion - Vi registrere her vore brewbuddy i service, så vi kan bruge den i vores razorpage. 
             builder.Services.AddDbContext<BrewBuddyContext>(options => 
@@ -49,6 +51,8 @@ namespace BrewBuddy
             //
             builder.Services.AddRazorPages();
 
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -72,6 +76,7 @@ namespace BrewBuddy
             app.MapRazorPages();
 
             app.Run();
+
         }
     }
 }

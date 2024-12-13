@@ -1,0 +1,24 @@
+﻿@page
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model BrewBuddy.Pages.Statistikker.IndexxxModel
+@{
+    Layout = null;
+}
+@* <!DOCTYPE html> *@
+
+@* <html> *@
+<h1>
+    <meta name="viewport" content="width=device-width" />
+    <script src="//cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
+
+    <script src="//cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
+    <title>ColumnChart</title>
+</h1>
+
+<section>
+    <form method="post">
+        <div>@Html.Raw(Model.ChartJson)</div>
+        <br />
+    </form>
+</section>
+@* </html> *@

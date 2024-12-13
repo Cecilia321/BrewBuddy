@@ -32,8 +32,15 @@ namespace BrewBuddy.Pages.Assignments
 
         public void OnGet()
         {
-            //Debug.WriteLine("New Assignment added: " + NewAssignment.Type);
-            // Get all assignments from the repository
+            // Sørg for, at NewAssignment er initialiseret
+            if (NewAssignment == null)
+            {
+                NewAssignment = new Assignment();
+            }
+
+            Debug.WriteLine("New Assignment added: " + NewAssignment.Type);
+
+            // Hent alle opgaver fra repository
             var allAssignments = _repository.GetAll();
             PopulateAssignmentLists(allAssignments);
         }

@@ -35,7 +35,8 @@ namespace BrewBuddy.Pages.Assignments
             Assignments = allAssignments
             .GroupBy(a => a.Type)                // Gruppér efter opgavetype
             .Select(g => g.First())             // Tag den første opgave i hver gruppe
-            .ToList();
+            .ToList();  
+
 
         }
 
