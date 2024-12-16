@@ -7,11 +7,13 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using FusionCharts.DataEngine;
 using FusionCharts.Visualization;
 using System.Data;
+using Microsoft.AspNetCore.Authorization;
 
 
 
 namespace BrewBuddy.Pages.Statistikker
 {
+    [Authorize(Policy = "AdminOnly")]
     public class StatistiksModel : PageModel
     {
         //vi statrer med at injektisere repositoriet i coffiemachinmodel
@@ -81,12 +83,12 @@ namespace BrewBuddy.Pages.Statistikker
                     column.Caption.Text = $"Mængde af Bønner og MælkePulver for Maskine {group.Key}";
                     column.SubCaption.Text = "Viser mængden af bønner og mælkepulver pr. maskine";
 
-                    // Skjul legend
+                    // Skjul legend -- legend viser forklaring af farver og linjer.
                     column.Legend.Show = false;
 
                     // Sæt X-aksen som Type (Bønner eller MælkePulver) og Y-aksen som Amount
                     column.XAxis.Text = "Type";
-                    column.YAxis.Text = "Mængde (i kg)";
+                    column.YAxis.Text = "Mængde (i antal poser)";
 
                     // Vælg tema for diagrammet
                     column.ThemeName = FusionChartsTheme.ThemeName.CANDY;

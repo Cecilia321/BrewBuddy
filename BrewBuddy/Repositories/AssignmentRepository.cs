@@ -9,7 +9,7 @@ namespace BrewBuddy.Repositories
     {
         private readonly BrewBuddyContext _context;
 
-        //vi laver en konstruktør som tager brewbuddycontext som parameter 
+        //vi laver en konstruktør som tager brewbuddycontext som parameter. Konstruktøren injicerer et repository-objekt via dependency injection. Dette repository bruges til at interagere med databasen.
         public AssignmentRepository(BrewBuddyContext context)
         {
             _context = context;

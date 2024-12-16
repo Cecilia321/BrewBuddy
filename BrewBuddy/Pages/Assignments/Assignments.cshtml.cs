@@ -1,5 +1,6 @@
 using BrewBuddy.Interface;
 using BrewBuddy.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.SignalR;
@@ -8,6 +9,7 @@ using System.Security.Claims;
 
 namespace BrewBuddy.Pages.Assignments
 {
+    [Authorize]
     public class AssignmentsModel : PageModel
     {
         private readonly IRepository<Assignment> _repository;
@@ -25,7 +27,6 @@ namespace BrewBuddy.Pages.Assignments
         public AssignmentsModel(IRepository<Assignment> repository)
         {
             _repository = repository;
-
       
         }
 
@@ -45,59 +46,20 @@ namespace BrewBuddy.Pages.Assignments
             PopulateAssignmentLists(allAssignments);
         }
 
-        //public IActionResult OnPost()
-        //{
-        //    Debug.WriteLine($"MachineId received: {NewAssignment.MachineId}");
-
-        //    if (!ModelState.IsValid)
-        //    {
-        //        Debug.WriteLine("ModelState is invalid");
-        //        foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
-        //        {
-        //            Debug.WriteLine($"Error: {error.ErrorMessage}");
-        //        }
-        //        Assignments = _repository.GetAll();
-        //        return Page();
-        //    }
-        //    NewAssignment.UserId = null;
-        //    NewAssignment.FinishedDateAndTime = null;
-        //    _repository.Add(NewAssignment);
-        //    return RedirectToPage();
-        //}
-
-        //public IActionResult OnPostComplete(int AssignmentId)
-        //{
-        //    //Debug.WriteLine("hallo");
-        //    //Debug.WriteLine(AssignmentId);
-        //    var assignment = _repository.GetAllById(AssignmentId);
-        //    if (assignment == null)
-        //    {
-        //        return Page();
-        //    }
-        //    assignment.IsComplete = true;
-        //    assignment.FinishedDateAndTime = DateTime.Now;
-        //    assignment.UserId = ;
-
-
-        //    _repository.Update(assignment);
-
-        //    Assignments = _repository.GetAll();
-
-        //    return Page();
-
-
-
             public IActionResult OnPostComplete(int AssignmentId, decimal? Amount)
             {
-                // Check if Amount is valid
-                if (Amount < 0)
-                {
-                    ModelState.AddModelError("Amount", "Beløbet skal være større end 0.");
-                    IncompleteAssignments = GetIncompleteAssignments(_repository.GetAll()); // Refresh assignments list
-                    return Page(); // Return to the page with the error message
-                }
-                // Hent opgaven fra databasen
-                var assignment = _repository.GetAllById(AssignmentId);
+            // Check if Amount is valid
+            //if (Amount < 0)
+            //{
+            //    ModelState.AddModelError("Amount", "Beløbet skal være større end 0.");
+            //    IncompleteAssignments = GetIncompleteAssignments(_repository.GetAll()); // Refresh assignments list
+            //    return Page(); // Return to the page with the error message
+            //}
+            // Hvis opgaven er af type 'bønner' eller 'mælkepulver', så skal Amount være gyldigt
+           
+
+            // Hent opgaven fra databasen
+            var assignment = _repository.GetAllById(AssignmentId);
                 if (assignment == null)
                 {
                     ModelState.AddModelError("", "Opgaven findes ikke.");
@@ -114,10 +76,17 @@ namespace BrewBuddy.Pages.Assignments
                     return Page();
                 }
 
+                if ((assignment.Type == "bønner" || assignment.Type == "mælkepulver") && Amount < 0)
+            {
+                ModelState.AddModelError("Amount", "Beløbet skal være større end 0.");
+                IncompleteAssignments = GetIncompleteAssignments(_repository.GetAll()); // Refresh assignments list
+                return Page(); // Return to the page with the error message
+            }
 
 
-                //Marker opgaven som fuldført og tildel UserId
-                assignment.IsComplete = true;
+
+            //Marker opgaven som fuldført og tildel UserId
+            assignment.IsComplete = true;
                 assignment.FinishedDateAndTime = DateTime.Now;
                 assignment.UserId = userId;
                 assignment.Amount = Amount;

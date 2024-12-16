@@ -8,7 +8,7 @@ using System.Diagnostics;
 
 namespace BrewBuddy.Pages.UserFolder
 {
-    //[Authorize(Policy = "AdminOnly")]
+    [Authorize(Policy = "AdminOnly")]
     public class UsersModel : PageModel
     {
         private readonly IRepository<User> _repository; //vi statrer med at injektisere repositoriet i coffiemachinmodel

@@ -30,7 +30,7 @@ namespace BrewBuddy
             builder.Services.AddAuthentication("MyCookieAuth").AddCookie("MyCookieAuth", options =>
             {
                 options.Cookie.Name = "MyCookieAuth";
-                options.LoginPath = "/Account/Login";
+                options.LoginPath = "/Index";
                 options.AccessDeniedPath = "/Account/AccesDenied";
                 options.ExpireTimeSpan = TimeSpan.FromSeconds(60);
             });

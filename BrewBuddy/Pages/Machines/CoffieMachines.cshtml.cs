@@ -1,11 +1,13 @@
 using BrewBuddy.Interface;
 using BrewBuddy.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Diagnostics.Metrics;
 
 namespace BrewBuddy.Pages.Machines
 {
+    [Authorize(Policy = "AdminOnly")]
     public class CoffieMachinesModel : PageModel
     {
         //vi statrer med at injektisere repositoriet i coffiemachinmodel
