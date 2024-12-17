@@ -11,18 +11,23 @@ namespace BrewBuddy.Pages.UserFolder
     [Authorize(Policy = "AdminOnly")]
     public class UsersModel : PageModel
     {
-        private readonly IRepository<User> _repository; //vi statrer med at injektisere repositoriet i coffiemachinmodel
+        //vi statrer med at injektisere repositoriet i coffiemachinmodel
+        private readonly IRepository<User> _repository;
 
-        public List<User> users { get; set; } //denne her laver vi for at holde maskinerne i en liste 
+
+        //denne her laver vi for at holde maskinerne i en liste 
+        public List<User> users { get; set; }
 
 
+        //og den her laver vi for at kunne oprette en ny maskine 
         [BindProperty]
-        public User NewUser { get; set; } //og den her laver vi for at kunne oprette en ny maskine 
+        public User NewUser { get; set; } 
 
         //Her genere vi en Bcrypt salt - ellers kunne vi skrive /*workFactor: 12*/ i stedet 
         string salt = BCrypt.Net.BCrypt.GenerateSalt(12);
 
-        public UsersModel(IRepository<User> repository) //derefter laver vi en konstruktør med repositori
+        //derefter laver vi en konstruktør med repositori
+        public UsersModel(IRepository<User> repository) 
         {
             _repository = repository;
         }

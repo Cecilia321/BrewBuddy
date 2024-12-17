@@ -10,7 +10,7 @@
 
 <form method="post" class="mx-auto" style="max-width: 600px;">
     <input type="hidden" name="UpdateUser.UserId" value="@Model.UpdateUser.UserId" />
-    <!-- Fornavn -->
+    @* Fornavn *@
     <div class="mb-3">
         <label for="FirstName" class="form-label">Fornavn</label>
         <input type="text" id="FirstName" name="UpdateUser.FirstName" class="form-control" 
@@ -19,7 +19,7 @@
         <small class="form-text text-muted">Fornavnet skal være mellem 1 og 50 tegn.</small>
     </div>
 
-    <!-- Efternavn -->
+    @* Efternavn *@
     <div class="mb-3">
         <label for="LastName" class="form-label">Efternavn</label>
         <input type="text" id="LastName" name="UpdateUser.LastName" class="form-control" 
@@ -28,7 +28,7 @@
         <small class="form-text text-muted">Efternavnet skal være mellem 2 og 50 tegn.</small>
     </div>
 
-    <!-- Telefon nummer -->
+   @*  Telefon nummer *@
     <div class="mb-3">
         <label for="PhoneNumber" class="form-label">Telefonnummer</label>
         <div class="input-group">
@@ -38,28 +38,16 @@
         </div>
     </div>  
 
-    <!-- Rolle -->
+    @* Rolle *@
     <div class="mb-3">
         <label for="Role" class="form-label">rolle</label>
         <div class="input-group">
-            @* <span class="input-group-text">+45</span> *@
             <input type="text" id="Role" name="UpdateUser.Role" class="form-control"
                    placeholder="Stilling" required value="@Model.UpdateUser.Role" />
         </div>
     </div>
 
-
-   @*  <div class="mb-3">
-    <label for="Role" class="form-label">Stilling</label>
-    <select id="Role" name="UpdateUser.Role" class="form-control" required>
-        <option value="" disabled selected>Vælg en stilling</option>
-        <option value="Admin">Admin</option>
-        <option value="User">Medarbejder</option>
-    </select>
-    <small class="form-text text-muted">Vælg enten 'Admin' eller 'Medarbejder'.</small>
-</div> *@
-
-    <!-- Fødselsdato -->
+    @* Fødselsdato *@
     <div class="mb-3">
         <label for="BirthDate" class="form-label">Fødselsdagsdato</label>
         <input type="date" id="BirthDate" name="UpdateUser.BirthDate" class="form-control"
@@ -68,7 +56,7 @@
         <small class="form-text text-muted">Fødselsdatoen skal være før dags dato.</small>
     </div>
 
-    <!-- Email -->
+    @* Email  *@
     <div class="mb-3">
         <label for="Email" class="form-label">Email</label>
         <input type="email" id="Email" name="UpdateUser.Email" class="form-control"
@@ -76,21 +64,14 @@
         <small class="form-text text-muted">Indtast en gyldig emailadresse.</small>
     </div>
 
-    <!-- Adgangskode -->
+    @* Adgangskode *@
     <div class="mb-3">
         <label for="Password" class="form-label">kode</label>
         <div class="input-group">
-            @* <span class="input-group-text">+45</span> *@
             <input type="text" id="Password" name="UpdateUser.Password" class="form-control"
                    placeholder="Stilling" required value="@Model.UpdateUser.Password" />
         </div>
-    </div>
-    @* <div class="mb-3">
-        <label for="Password" class="form-label">Kode</label>
-        <input type="password" id="Password" name="UpdateUser.Password" class="form-control"
-               minlength="8" required placeholder="Indtast adgangskode" />
-        <small class="form-text text-muted">Adgangskoden skal være mindst 8 tegn lang.</small>
-    </div> *@
+    </div> 
 
     <button type="submit" class="btn btn-primary w-100">Gem</button>
 </form>

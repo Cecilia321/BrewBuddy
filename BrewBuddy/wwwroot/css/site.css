@@ -104,8 +104,8 @@ a {
 }
 
 button {
-    color: #f5efe6;
-    background-color: #38281e;
+    color: #3c2f2f;
+    background-color: #3c2f2f;
 }
 .btn-primary:hover {
     transform: scale(1.02);
@@ -117,7 +117,7 @@ button {
 
 /* Navigation under header */
 .top-nav {
-    background-color: white; /* Mørk brun */
+    background-color: white; 
     padding: 10px 0;
     color: white;
     text-align: center;

@@ -14,20 +14,20 @@ namespace BrewBuddy.Pages.Assignments
     {
         private readonly IRepository<Assignment> _repository;
 
-        //denne her laver vi for at holde maskinerne i en liste 
+        //disse lister laver vi for at holde maskinerne i en liste alt efter hvornår de er blevet løst.
         public List<Assignment> Assignments { get; set; }
         public List<Assignment> IncompleteAssignments { get; set; }
         public List<Assignment> TodaysCompletedAssignments { get; set; }
         public List<Assignment> YesterdaysCompletedAssignments { get; set; }
 
+        //her binder vi daterne til NewAssignment.
         [BindProperty]
         public Assignment NewAssignment { get; set; }
 
-        //derefter laver vi en konstruktør med repositori
+        //derefter laver vi en konstruktør med repositori - Når AssignmentsModel oprettes, injiceres en instans af IRepository<Assignment> i konstruktøren. - Konstruktøren gemmer denne instans i _repository.
         public AssignmentsModel(IRepository<Assignment> repository)
         {
             _repository = repository;
-      
         }
 
 
@@ -48,16 +48,6 @@ namespace BrewBuddy.Pages.Assignments
 
             public IActionResult OnPostComplete(int AssignmentId, decimal? Amount)
             {
-            // Check if Amount is valid
-            //if (Amount < 0)
-            //{
-            //    ModelState.AddModelError("Amount", "Beløbet skal være større end 0.");
-            //    IncompleteAssignments = GetIncompleteAssignments(_repository.GetAll()); // Refresh assignments list
-            //    return Page(); // Return to the page with the error message
-            //}
-            // Hvis opgaven er af type 'bønner' eller 'mælkepulver', så skal Amount være gyldigt
-           
-
             // Hent opgaven fra databasen
             var assignment = _repository.GetAllById(AssignmentId);
                 if (assignment == null)
@@ -85,8 +75,8 @@ namespace BrewBuddy.Pages.Assignments
 
 
 
-            //Marker opgaven som fuldført og tildel UserId
-            assignment.IsComplete = true;
+            //Marker opgaven som fuldført og tildel UserId, finishedDate og amount
+                assignment.IsComplete = true;
                 assignment.FinishedDateAndTime = DateTime.Now;
                 assignment.UserId = userId;
                 assignment.Amount = Amount;
@@ -102,7 +92,7 @@ namespace BrewBuddy.Pages.Assignments
             }
 
 
-            // Metode til at opdatere listerne
+            // Metode til at opdatere listerne som holder styr på om opgaverne er løste 
             private void PopulateAssignmentLists(IEnumerable<Assignment> allAssignments)
         {
             IncompleteAssignments = GetIncompleteAssignments(allAssignments);

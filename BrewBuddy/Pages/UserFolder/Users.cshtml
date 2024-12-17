@@ -5,7 +5,7 @@
 
 <h1>Brugere</h1>
 
-<!-- Vis eksisterende users -->
+@* Vis eksisterende users *@
 <table class="table table-striped">
     <thead>
         <tr>
@@ -39,7 +39,7 @@
                     </form>
                 </td>
                 <td>
-                <!-- Opdater-knap -->
+                @* Opdater-knap *@
                 <form method="get" asp-page="/UserFolder/UpdateUser" asp-route-id="@user.UserId" class="d-inline">
                     <button type="submit" class="btn btn-primary btn-sm me-2">Opdater</button>
                 </form>
@@ -52,19 +52,19 @@
 
 
 
-<!-- Tilføj ny bruger -->
+ @* Tilføj ny bruger *@
  <hr class="my-5" /> 
  <h2 class="mb-4 text-center"><strong>Opret medarbejder</strong></h2>
 
  <form method="post" class="mx-auto" style="max-width: 600px;">
-     <!--Fornavn-->
+     @* Fornavn *@
      <div class="mb-3">
          <label for="FirstName" class="form-label">Fornavn</label>
          <input type="text" id="FirstName" name="NewUser.FirstName" class="form-control" 
          minlength="1" maxlength="50 "required placeholder="Indtast fornavn"/>
          <small class="form-text text-muted">Fornavnet skal være mellem 1 og 50 tegn.</small>
      </div>
-      <!--Efternavn-->
+      @* Efternavn *@
      <div class="mb-3">
          <label for="LastName" class="form-label">Efternavn</label>
          <input type="text" id="LastName" name="NewUser.LastName" class="form-control"
@@ -72,7 +72,7 @@
                  placeholder="Indtast efternavn" />
              <small class="form-text text-muted">Efternavnet skal være mellem 2 og 50 tegn.</small>
      </div>
-      <!--Mobilnummer-->
+      @* Mobilnummer *@
      <div class="mb-3">
          <label for="PhoneNumber" class="form-label">Telefonnummer</label>
          <div class="input-group">
@@ -81,7 +81,7 @@
                     placeholder="12345678" required />
          </div>
 
-      <!--Rolle-->
+      @* Rolle *@
      <div class="mb-3">
          <label for="Role" class="form-label">Stilling</label>
          <select id="Role" name="NewUser.Role" class="form-control" required>
@@ -91,8 +91,8 @@
          </select>
          <small class="form-text text-muted">Vælg enten 'Admin' eller 'Medarbejder'.</small>
      </div>
-    <!--Fødselsdato-->
 
+     @* Fødselsdato *@
     <div class="mb-3">
         <label for="BirthDate" class="form-label">Fødselsdagsdato</label>
         <input type="date" id="BirthDate" name="NewUser.BirthDate" class="form-control"
@@ -101,7 +101,7 @@
         <small class="form-text text-muted">Fødselsdatoen skal være før dags dato.</small>
     </div>
 
-    <!-- Email -->
+    @* Email *@
     <div class="mb-3">
         <label for="Email" class="form-label">Email</label>
         <input type="email" id="Email" name="NewUser.Email" class="form-control" required
@@ -109,14 +109,14 @@
         <small class="form-text text-muted">Indtast en gyldig emailadresse.</small>
     </div>
 
-    <!-- Adgangskode -->
-   @*  <div class="mb-3">
+    @* Adgangskode *@
+    <div class="mb-3">
         <label for="Password" class="form-label">Kode</label>
         <input type="password" id="Password" name="NewUser.Password" class="form-control"
                minlength="8" required
                placeholder="Indtast adgangskode" />
         <small class="form-text text-muted">Adgangskoden skal være mindst 8 tegn lang.</small>
-    </div> *@
+    </div>
 
     <button type="submit" class="btn btn-primary w-100">Tilføj</button>
 </form>

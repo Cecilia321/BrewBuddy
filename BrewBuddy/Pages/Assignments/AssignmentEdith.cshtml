@@ -34,14 +34,14 @@
                     }
                     </td>
                     <td>
-                        <!-- Slet-knap -->
+                        @* Slet-knap *@
                         <form method="post" asp-page-handler="Delete" style="display: inline;">
                             <input type="hidden" name="AssignmentId" value="@assignment.AssignmentId" />
                             <button type="submit" class="btn btn-danger">Slet</button>
                         </form>
 
-                        <!-- Rediger-link -->
-                            <a asp-page="./Edit" asp-route-id="@assignment.AssignmentId" class="btn btn-warning">Rediger</a>
+                        @* Rediger-link *@
+                    <a asp-page="./Edit" asp-route-id="@assignment.AssignmentId" class="btn btn-warning" style="background-color: #38281e; color: white;">Rediger</a>
                     </td>
                 </tr>
         }
@@ -86,9 +86,5 @@
             }
         </select>
     </div>
-    @* <div class="mb-3">
-        <label for="MachineId" class="form-label">Maskine ID:</label>
-        <input asp-for="NewAssignment.MachineId" type="number" class="form-control" required />
-    </div> *@
     <button type="submit" class="btn btn-success">Tilføj</button>
 </form>

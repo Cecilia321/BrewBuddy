@@ -1,45 +1,5 @@
 ﻿@page
 @model EditCoffieMachinesModel
-@* @{
-    ViewData["Title"] = "Index";
-}
-
-<h1>Index</h1>
-
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.NewMachine.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NewMachine.Location)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.coffieMachines) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Location)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.MachineId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.MachineId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.MachineId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table> *@
-
 @{
     ViewData["Title"] = "Rediger Kaffemaskiner";
 }
@@ -51,7 +11,7 @@
 <form method="post">
     <input type="text" asp-for="NewMachine.Name" placeholder="Navn" required />
     <input type="text" asp-for="NewMachine.Location" placeholder="Lokation" required />
-    <button type="submit" formaction="/Machines/EditCoffieMachines?handler=Add">Tilføj</button>
+    <button style="background-color: #38281e; color: white" type="submit" formaction="/Machines/EditCoffieMachines?handler=Add">Tilføj</button>
 </form>
 
 
@@ -65,8 +25,8 @@
             <input type="hidden" name="MachineId" value="@machine.MachineId" />
             <input type="text" name="Name" value="@machine.Name" required />
             <input type="text" name="Lokation" value="@machine.Location" required />
-            <button class="text-button" type="submit" formaction="/Machines/UpdateMachine?handler=Update">Opdater</button>
-            <button type="submit" formaction="/Machines/EditCoffieMachines?handler=Delete">Slet</button>
+            <button style="background-color: #38281e; color: white" class="text-button" type="submit" formaction="/Machines/UpdateMachine?handler=Update">Opdater</button>
+            <button style="background-color: #38281e; color: white" type="submit" formaction="/Machines/EditCoffieMachines?handler=Delete">Slet</button>
            
         </form>
     </div>

@@ -7,7 +7,7 @@
 
 @foreach (var group in Model.Stat.GroupBy(s => s.MachineId))
 {
-    <h2>Maskine Id: @group.Key</h2> <!-- Vis maskineid for hver gruppe -->
+    <h2>Maskine Id: @group.Key</h2> @* Vis maskineid for hver gruppe *@
 
     <table>
         <thead>
@@ -30,17 +30,9 @@
             }
         </tbody>
     </table>
-    @* <form method="post">
-
-        <div>
-            @Html.Raw(Model.ChartJson)
-        </div>
-        @* <div>@Html.Raw(Model.ChartJson)</div> *@
-        @*<br />
-    </form> *@
 }
 
-
+<br />
 
 <h1>
     <meta name="viewport" content="width=device-width" />
@@ -56,7 +48,6 @@
         <div>
             @Html.Raw(Model.ChartJson)
         </div>
-        @* <div>@Html.Raw(Model.ChartJson)</div> *@
       <br />
     </form>
 </section> 

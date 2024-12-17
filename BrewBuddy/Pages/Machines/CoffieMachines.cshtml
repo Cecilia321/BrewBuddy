@@ -1,40 +1,4 @@
-﻿@* @page
-@model CoffieMachinesModel
-@{
-    ViewData["Title"] = "Kaffemaskiner";
-}
-
-<h1 class="text-center">Kaffemaskiner</h1>
-
-<div>
-    @foreach (var machine in Model.coffieMachines)
-    {
-        <div class="coffee-machine">
-            <h3>@machine.Name</h3>
-            <button type="button" class="btn-info"><a asp-page="/MachineInfoMappe/MachineInfos" asp-route-id="@machine.MachineId">Info</a></button>
-            @* <a asp-page="/MachineInfoMappe/MachineInfos" class="info-btn" onclick="toggleInfo('info-@machine.MachineId')">Info</a> *@
-           @*  <div id="info-@machine.MachineId" class="info-section" style="display: none;"> 
-                
-            </div>
-        </div>
-    }
-</div>
-
-<a asp-page="/Machines/EditCoffieMachines" class="edit-link">Rediger Kaffemaskiner</a>
-
-
-<script>
-    function toggleInfo(infoId) {
-        var infoSection = document.getElementById(infoId);
-        if (infoSection.style.display === "none") {
-            infoSection.style.display = "block";
-        } else {
-            infoSection.style.display = "none";
-        }
-    }
-</script> *@ 
-
-@page
+﻿@page
 @model CoffieMachinesModel
 @{
     ViewData["Title"] = "Kaffemaskiner";
@@ -52,23 +16,18 @@
                 <p>@machine.Location</p>
                 <p class="machine-Location fw-bold h4">StartTidsunkt for leje af maskine:</p>
                 <p> @machine.RentDate</p> @*Vi laver p fordi der er en paragraf og ikke en overskrift *@
-                <div class="text-center mt-3">
-                    <button type="button" class="btn btn-info">
-                        <a asp-page="/MachineInfoMappe/MachineInfos" asp-route-id="@machine.MachineId" class="text-white text-decoration-none">Info</a>
-                    </button>
-                </div>
-                <div id="info-@machine.MachineId" class="info-section mt-3" style="display: none;">
-                    <!-- Info om maskinen kan tilføjes her -->
-                </div>
+       
+                
             </div>
         }
     </div>
 </div>
 
 <div class="text-center mt-4">
-    <a asp-page="/Machines/EditCoffieMachines" class="btn btn-secondary">Rediger Kaffemaskiner</a>
+    <a asp-page="/Machines/EditCoffieMachines" style="background-color: #38281e; color: white" class="btn btn-secondary">Rediger Kaffemaskiner</a>
 </div>
 
+@*JavaScript kode *@
 <script>
     function toggleInfo(infoId) {
         var infoSection = document.getElementById(infoId);
@@ -99,7 +58,7 @@
     }
 
     .btn-info a {
-        color: white;
+        color: #38281e;
         text-decoration: none;
     }
 

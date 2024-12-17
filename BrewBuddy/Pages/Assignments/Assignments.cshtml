@@ -42,10 +42,12 @@
                         @if (!assignment.IsComplete)
                         {
                             <form method="post" asp-page-handler="Complete" style="display: inline;">
+
                                 <input type="hidden" name="AssignmentId" value="@assignment.AssignmentId" />
                                 <label for="Amount-@assignment.AssignmentId">Amount:</label>
                                 <input type="number" id="Amount-@assignment.AssignmentId" name="Amount" value="@assignment.Amount" />
-                                <button type="submit" class="btn btn-primary">Mark Complete</button>
+                                <button style="background-color: #38281e; border-color: #38281e;" type="submit" class="btn btn-primary">Mark Complete</button>
+                                
                             </form>
                         }
                         else
@@ -88,6 +90,10 @@
 </table>
 }
 <h2>Gårdagens løste opgaver</h2>
+<hr class="my-5" />
+@foreach (var machineGroup in Model.YesterdaysCompletedAssignments.GroupBy(a => a.MachineId))
+{
+<p class="h4"><ins>Maskine: @machineGroup.Key</ins></p>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -97,21 +103,14 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var assignment in Model.YesterdaysCompletedAssignments)
+        @foreach (var assignment in machineGroup)
         {
             <tr>
                 <td>@assignment.Type</td>
                 <td>@assignment.FinishedDateAndTime?.ToString("g")</td>
-                <td>@assignment.User?.FirstName</td>
+                <td>@assignment.UserId</td>
             </tr>
         }
     </tbody>
 </table>
-
-
-<style>
-    .transparent-hr {
-        border: none; /* Fjern standard kant */
-        border-top: 1px solid rgba(0, 0, 0, 0.2); /* Juster farve og gennemsigtighed */
-    }
-</style>
+}

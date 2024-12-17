@@ -16,9 +16,10 @@ namespace BrewBuddy.Pages.Assignments
         private readonly IRepository<CoffieMachine> _machineRepository;
 
 
-        //denne her laver vi for at holde maskinerne i en liste 
+        
         public List<Assignment> Assignments { get; set; }
 
+        //denne her laver vi for at holde maskinerne i en liste, så vi kan få fat i maskine id på de eksisterende maskiner
         public List<CoffieMachine> Machines { get; set; }
 
 
@@ -95,26 +96,6 @@ namespace BrewBuddy.Pages.Assignments
 
             return RedirectToPage();
         }
-
-        //public IActionResult OnPost()
-        //{
-        //    Debug.WriteLine($"MachineId received: {NewAssignment.MachineId}");
-
-        //    if (!ModelState.IsValid)
-        //    {
-        //        Debug.WriteLine("ModelState is invalid");
-        //        foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
-        //        {
-        //            Debug.WriteLine($"Error: {error.ErrorMessage}");
-        //        }
-        //        Assignments = _repository.GetAll();
-        //        return Page();
-        //    }
-        //    NewAssignment.UserId = null;
-        //    NewAssignment.FinishedDateAndTime = null;
-        //    _repository.Add(NewAssignment);
-        //    return RedirectToPage();
-        //}
 
         public IActionResult OnPostDelete(int AssignmentId)
         {
